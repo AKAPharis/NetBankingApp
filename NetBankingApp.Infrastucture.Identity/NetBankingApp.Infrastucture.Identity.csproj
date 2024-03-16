@@ -21,4 +21,10 @@
     <PackageReference Include="MimeKit" Version="4.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NetBankingApp.Core.Application\NetBankingApp.Core.Application.csproj" />
+    <ProjectReference Include="..\NetBankingApp.Core.Domain\NetBankingApp.Core.Domain.csproj" />
+    <ProjectReference Include="..\NetBankingApp.Infrastucture.Shared\NetBankingApp.Infrastucture.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
