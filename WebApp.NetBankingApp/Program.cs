@@ -19,6 +19,9 @@ namespace WebApp.NetBankingApp
                 app.UseHsts();
             }
 
+
+            ///bjasdfbfdshbfsdhbilfshbja
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
