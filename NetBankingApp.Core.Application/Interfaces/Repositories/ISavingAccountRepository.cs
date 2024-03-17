@@ -2,7 +2,7 @@
 
 namespace NetBankingApp.Core.Application.Interfaces.Repositories
 {
-    public interface ITransactionLogRepository : IGenericRepository<TransactionLog>
+    public interface ISavingAccountRepository : IGenericRepository<SavingAccount>
     {
         Task<int> Total();
         Task<int> DailyTotal();
