@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repositories\**" />
+    <EmbeddedResource Remove="Repositories\**" />
+    <None Remove="Repositories\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.17" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
@@ -16,10 +22,6 @@
     <ProjectReference Include="..\NetBankingApp.Core.Application\NetBankingApp.Core.Application.csproj" />
     <ProjectReference Include="..\NetBankingApp.Core.Domain\NetBankingApp.Core.Domain.csproj" />
     <ProjectReference Include="..\NetBankingApp.Infrastucture.Shared\NetBankingApp.Infrastucture.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>
