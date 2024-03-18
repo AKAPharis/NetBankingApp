@@ -7,7 +7,7 @@ namespace NetBankingApp.Core.Application
 {
     public static class ServiceRegistration
     {
-        public static void AddIdentityInfrastructure(this IServiceCollection services)
+        public static void AddApplicationLayer(this IServiceCollection services)
         {
 
             #region Services
