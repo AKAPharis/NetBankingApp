@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NetBankingApp.Core.Application.Interfaces.Repositories
 {
-    public interface ISavinAccountRepository : IGenericRepository<SavingAccount>
+    public interface ISavingAccountRepository : IGenericRepository<SavingAccount>
     {
     }
 }
