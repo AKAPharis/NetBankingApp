@@ -4,5 +4,7 @@ namespace NetBankingApp.Core.Application.Interfaces.Repositories
 {
     public interface IPaymentLogRepository : IGenericRepository<PaymentLog>
     {
+        Task<int> Total();
+        Task<int> DailyTotal();
     }
 }
