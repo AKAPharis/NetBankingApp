@@ -7,6 +7,6 @@ namespace NetBankingApp.Core.Domain.Models
         public int Guid { get; set; }
         public double LimitAmount { get; set; }
         public double Debt {  get; set; }
-        public int IdCustomer {  get; set; }
+        public string IdCustomer {  get; set; }
     }
 }

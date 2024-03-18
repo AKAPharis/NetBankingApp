@@ -153,7 +153,8 @@ namespace NetBankingApp.Infrastucture.Identity.Services
                 response.Error = $"An error occurred trying to register the user.";
                 return response;
             }
-
+            var createdUser = await _userManager.FindByNameAsync(user.UserName);
+            response.Id = createdUser.Id;
             return response;
         }
 
