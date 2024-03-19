@@ -16,6 +16,16 @@ namespace NetBankingApp.Infrastucture.Persistence.Repositories
             return _dbSet.Where(x => x.Created.Day == DateTime.Now.Day).CountAsync();
         }
 
+        public async Task<SavingAccount> GetByGuid(int guid)
+        {
+            return await _dbSet.FirstOrDefaultAsync(x => x.Guid == guid);
+        }
+
+        public async Task<SavingAccount> GetMain(string customerId)
+        {
+            return await _dbSet.FirstOrDefaultAsync(x => x.IsMain == true && x.IdCustomer == customerId);
+        }
+
         public Task<int> Total()
         {
             return _dbSet.CountAsync();

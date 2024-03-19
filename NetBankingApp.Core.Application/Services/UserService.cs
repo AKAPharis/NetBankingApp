@@ -4,6 +4,7 @@ using NetBankingApp.Core.Application.Enums;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.Account;
 using NetBankingApp.Core.Application.ViewModels.SavingAccount;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NetBankingApp.Core.Application.Services
 {
@@ -47,7 +48,7 @@ namespace NetBankingApp.Core.Application.Services
                 await _savingAccountService.CreateAsync(new SaveSavingAccountViewModel
                 {
                    IdCustomer = user.Id,
-                   Savings = vm.InitialAmount.Value,
+                   Savings = vm.InitialAmount,
                    IsMain = true,
                 });
 
@@ -67,27 +68,33 @@ namespace NetBankingApp.Core.Application.Services
         }
 
 
-        #region Pendientes
 
-        //public async Task EditAsync(SaveUserViewModel vm, string origin)
-        //{
-        //    await _accountService.
-        //}
+        public async Task<EditResponse> EditAsync(SaveUserViewModel vm, string origin)
+        {
+            var result = await _accountService.EditUserAsync(_mapper.Map<EditRequest>(vm), origin);
+            if (result != null && !result.HasError)
+            {
+                if(vm.Role == Roles.Customer.ToString() && vm.InitialAmount > 0)
+                {
+                    await _savingAccountService.DepositToMain(vm.InitialAmount, vm.Id);
+                }
+            }
+            return result;
+        }
 
-        //public Task<UserViewModel> GetByIdAsync(string id)
-        //{
-        //    return _mapper.Map<UserViewModel>(_accountService.);
-        //}
+        public async Task<UserViewModel> GetByIdAsync(string id)
+        {
+            return await _accountService.GetByIdAsync(id);
+        }
 
-        //public Task<SaveUserViewModel> GetByIdSaveViewModelAsync(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<SaveUserViewModel> GetByIdSaveViewModelAsync(string id)
+        {
+            return await _accountService.GetByIdSaveViewModelAsync(id);
+        }
 
-        //public Task<UserViewModel> GetByUsernameAsync(string username)
-        //{
-        //    throw new NotImplementedException();
-        //}
-        #endregion
+        public async Task<UserViewModel> GetByUsernameAsync(string username)
+        {
+            return await _accountService.GetByUsernameAsync(username);
+        }
     }
 }

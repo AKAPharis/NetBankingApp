@@ -5,6 +5,7 @@ using NetBankingApp.Core.Application.Interfaces.Repositories;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.SavingAccount;
 using NetBankingApp.Core.Domain.Models;
+using System;
 
 namespace NetBankingApp.Core.Application.Services
 {
@@ -26,6 +27,20 @@ namespace NetBankingApp.Core.Application.Services
 
             } while (account != null);
             return await base.CreateAsync(viewModel);
+        }
+
+        public async Task Deposit(double amount, int guid)
+        {
+            SavingAccount account = await _savingAccountRepository.GetByGuid(guid);
+            account.Savings += amount;
+            await _savingAccountRepository.UpdateAsync(account, account.Id);
+        }
+
+        public async Task DepositToMain(double amount, string customerId)
+        {
+            SavingAccount account = await _savingAccountRepository.GetMain(customerId);
+            account.Savings += amount;
+            await _savingAccountRepository.UpdateAsync(account, account.Id);
         }
     }
 }
