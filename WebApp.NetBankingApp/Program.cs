@@ -1,3 +1,6 @@
+using NetBankingApp.Core.Application;
+using NetBankingApp.Infrastucture.Persistence;
+using NetBankingApp.Infrastucture.Identity;
 namespace WebApp.NetBankingApp
 {
     public class Program
@@ -8,7 +11,9 @@ namespace WebApp.NetBankingApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddApplicationLayer();
+            builder.Services.AddPersistenceLayer(builder.Configuration);
+            builder.Services.AddIdentityInfrastructure(builder.Configuration);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
