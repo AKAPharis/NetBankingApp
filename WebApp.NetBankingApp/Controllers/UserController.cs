@@ -16,7 +16,7 @@ namespace WebApp.NetBankingApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
@@ -24,7 +24,7 @@ namespace WebApp.NetBankingApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(vm);
             }
 
             AuthenticationResponse userVm = await _userService.LoginAsync(vm);

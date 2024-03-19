@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NetBankingApp.Core.Application.Dtos.Account;
 using NetBankingApp.Core.Application.ViewModels.Account;
 using NetBankingApp.Infrastucture.Identity.Models;
 using System;
@@ -22,7 +23,10 @@ namespace NetBankingApp.Infrastucture.Identity.Mappings
             CreateMap<BankingUser, SaveUserViewModel>()
                 .ReverseMap();
 
-
+            CreateMap<AuthenticationRequest, LoginViewModel>()
+                .ForMember(x => x.HasError, opt => opt.Ignore())
+                .ForMember(x => x.Error, opt => opt.Ignore())
+                .ReverseMap();
 
             #endregion
         }
