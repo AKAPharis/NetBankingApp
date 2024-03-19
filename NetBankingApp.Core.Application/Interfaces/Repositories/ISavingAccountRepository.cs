@@ -11,5 +11,8 @@ namespace NetBankingApp.Core.Application.Interfaces.Repositories
     {
         Task<int> Total();
         Task<int> DailyTotal();
+        Task<SavingAccount> GetMain(string customerId);
+        Task<SavingAccount> GetByGuid(int guid);
+
     }
 }

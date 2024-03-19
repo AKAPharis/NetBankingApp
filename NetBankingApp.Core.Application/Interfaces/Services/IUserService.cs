@@ -5,11 +5,11 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
 {
     public interface IUserService
     {
-        //Task<UserViewModel> GetByIdAsync(string id);
-        //Task<SaveUserViewModel> GetByIdSaveViewModelAsync(int id);
-        //Task<UserViewModel> GetByUsernameAsync(string username);
+        Task<UserViewModel> GetByIdAsync(string id);
+        Task<SaveUserViewModel> GetByIdSaveViewModelAsync(string id);
+        Task<UserViewModel> GetByUsernameAsync(string username);
         Task<string> ConfirmEmailAsync(string userId, string token);
-        //Task EditAsync(SaveUserViewModel vm, string origin);
+        Task<EditResponse> EditAsync(SaveUserViewModel vm, string origin);
         Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordViewModel vm, string origin);
         Task<ResetPasswordResponse> ResetPasswordAsync(string token, string username);
         Task<AuthenticationResponse> LoginAsync(LoginViewModel vm);
