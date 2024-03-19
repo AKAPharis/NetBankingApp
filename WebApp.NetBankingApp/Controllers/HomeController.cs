@@ -12,9 +12,11 @@ namespace WebApp.NetBankingApp.Controllers
         {
             _logger = logger;
         }
-
+        //asdfasdfdsaf
         public IActionResult Index()
         {
+
+            //adsfaddfsdsfdfsafddfsdfs
             return View();
         }
 
