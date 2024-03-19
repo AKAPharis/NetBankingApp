@@ -1,6 +1,7 @@
 using NetBankingApp.Core.Application;
 using NetBankingApp.Infrastucture.Persistence;
 using NetBankingApp.Infrastucture.Identity;
+using NetBankingApp.Infrastucture.Shared;
 namespace WebApp.NetBankingApp
 {
     public class Program
@@ -11,6 +12,7 @@ namespace WebApp.NetBankingApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddSharedInfrastructure(builder.Configuration);
             builder.Services.AddApplicationLayer();
             builder.Services.AddPersistenceLayer(builder.Configuration);
             builder.Services.AddIdentityInfrastructure(builder.Configuration);
