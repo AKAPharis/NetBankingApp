@@ -7,5 +7,7 @@ namespace NetBankingApp.Infrastucture.Identity.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string DocumentId { get; set; }
+        public bool IsActived { get; set; }
+
     }
 }
