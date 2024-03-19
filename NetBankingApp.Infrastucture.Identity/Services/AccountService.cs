@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NetBankingApp.Core.Application.Dtos.Account;
 using NetBankingApp.Core.Application.Enums;
 using NetBankingApp.Core.Application.Interfaces.Services;
+using NetBankingApp.Core.Application.ViewModels.Account;
 using NetBankingApp.Infrastucture.Identity.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -18,16 +20,29 @@ namespace NetBankingApp.Infrastucture.Identity.Services
         private readonly UserManager<BankingUser> _userManager;
         private readonly SignInManager<BankingUser> _signInManager;
         private readonly IEmailService _emailService;
+        private readonly IMapper _mapper;
 
 
-        public AccountService(UserManager<BankingUser> userManager, SignInManager<BankingUser> signInManager, IEmailService emailService)
+        public AccountService(UserManager<BankingUser> userManager, SignInManager<BankingUser> signInManager, IEmailService emailService, IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
+            _mapper = mapper;
         }
 
-
+        public async Task<UserViewModel> GetByIdAsync(string id)
+        {
+            return _mapper.Map<UserViewModel>(await _userManager.FindByIdAsync(id));
+        }
+        public async Task<UserViewModel> GetByUsernameAsync(string username)
+        {
+            return _mapper.Map<UserViewModel>(await _userManager.FindByNameAsync(username));
+        }
+        public async Task<SaveUserViewModel> GetByIdSaveViewModelAsync(string id)
+        {
+            return _mapper.Map<SaveUserViewModel>(await _userManager.FindByIdAsync(id));
+        }
 
 
         public async Task<AuthenticationResponse> AuthenticateAsync(AuthenticationRequest request)
@@ -99,7 +114,7 @@ namespace NetBankingApp.Infrastucture.Identity.Services
                 return response;
             }
 
-            if(request.Role != Roles.Customer.ToString() && request.Role != Roles.Admin.ToString())
+            if (request.Role != Roles.Customer.ToString() && request.Role != Roles.Admin.ToString())
             {
                 response.HasError = true;
                 response.Error = $"The role {request.Role} do not exist";
@@ -135,7 +150,7 @@ namespace NetBankingApp.Infrastucture.Identity.Services
 
                         break;
 
- 
+
                 }
 
                 var verificationUri = await SendVerificationEmailUri(user, origin);
@@ -155,6 +170,70 @@ namespace NetBankingApp.Infrastucture.Identity.Services
             }
             var createdUser = await _userManager.FindByNameAsync(user.UserName);
             response.Id = createdUser.Id;
+            return response;
+        }
+
+
+        public async Task<EditResponse> EditUserAsync(EditRequest request, string origin)
+        {
+            EditResponse response = new()
+            {
+                HasError = false
+            };
+
+            var userWithSameUserName = await _userManager.FindByNameAsync(request.UserName);
+            if (userWithSameUserName != null)
+            {
+                response.HasError = true;
+                response.Error = $"username '{request.UserName}' is already taken.";
+                return response;
+            }
+
+            var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
+            if (userWithSameEmail != null)
+            {
+                response.HasError = true;
+                response.Error = $"Email '{request.Email}' is already registered.";
+                return response;
+            }
+
+            if (request.Role != Roles.Customer.ToString() && request.Role != Roles.Admin.ToString())
+            {
+                response.HasError = true;
+                response.Error = $"The role {request.Role} do not exist";
+                return response;
+            }
+
+
+
+            BankingUser user = await _userManager.FindByIdAsync(request.DocumentId);
+            if (user == null)
+            {
+                response.HasError = true;
+                response.Error = $"We couldn't be able to find your user.";
+                return response;
+
+            }
+            user.UserName = request.UserName;
+            user.Email = request.Email;
+            user.DocumentId = request.DocumentId;
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+
+                response.HasError = true;
+                response.Error = $"An error occurred trying to edit the user.";
+                return response;
+            }
+
+            if (request.Password != null)
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                await _userManager.ResetPasswordAsync(user, token, request.Password);
+            }
+
             return response;
         }
 

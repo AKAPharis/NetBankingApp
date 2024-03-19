@@ -6,6 +6,7 @@ using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Infrastucture.Identity.Contexts;
 using NetBankingApp.Infrastucture.Identity.Models;
 using NetBankingApp.Infrastucture.Identity.Services;
+using System.Reflection;
 
 namespace NetBankingApp.Infrastucture.Identity
 {
@@ -29,6 +30,13 @@ namespace NetBankingApp.Infrastucture.Identity
                     m => m.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName));
                 });
             }
+            #endregion
+
+
+            #region Mapings
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+
             #endregion
 
 
