@@ -105,7 +105,7 @@ namespace NetBankingApp.Infrastucture.Identity
             //});
             #endregion
             #region Services
-            //services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IAccountService, AccountService>();
 
             #endregion
         }
