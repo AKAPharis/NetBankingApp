@@ -42,5 +42,22 @@ namespace NetBankingApp.Core.Application.Services
             account.Savings += amount;
             await _savingAccountRepository.UpdateAsync(account, account.Id);
         }
+
+        public async Task<SavingAccountViewModel> GetByGuid(int guid)
+        {
+            return _mapper.Map<SavingAccountViewModel>(await _savingAccountRepository.GetByGuid(guid));
+        }
+
+        public async Task<double> Withdraw(int guid, double amount)
+        {
+            SavingAccount account = await _savingAccountRepository.GetByGuid(guid);
+            if(account.Savings - amount > 0)
+            {
+                account.Savings -= amount;
+                await _savingAccountRepository.UpdateAsync(account, account.Id);
+                return amount;
+            }
+            return 0;
+        }
     }
 }
