@@ -96,5 +96,15 @@ namespace NetBankingApp.Core.Application.Services
         {
             return await _accountService.GetByUsernameAsync(username);
         }
+
+        public async Task<int> GetActiveUsers()
+        {
+            return await _accountService.GetActiveUsers();
+        }
+
+        public async Task<int> GetInactiveUsers()
+        {
+            return await _accountService.GetInactiveUsers();
+        }
     }
 }

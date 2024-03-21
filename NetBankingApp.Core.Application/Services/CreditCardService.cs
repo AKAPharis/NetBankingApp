@@ -46,6 +46,14 @@ namespace NetBankingApp.Core.Application.Services
         }
         #endregion
 
+        public async Task<int> TodayTotal()
+        {
+            return await _creditCardRepository.DailyTotal();
+        }
 
+        public async Task<int> Total()
+        {
+            return await _creditCardRepository.Total();
+        }
     }
 }

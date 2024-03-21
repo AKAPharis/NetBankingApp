@@ -39,5 +39,15 @@ namespace NetBankingApp.Core.Application.Services
             }
             return result;
         }
+
+        public async Task<int> TodayTotal()
+        {
+            return await _loanRepository.DailyTotal();
+        }
+
+        public async Task<int> Total()
+        {
+            return await _loanRepository.Total();
+        }
     }
 }

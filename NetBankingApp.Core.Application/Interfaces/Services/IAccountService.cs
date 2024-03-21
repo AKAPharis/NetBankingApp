@@ -17,6 +17,11 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
         Task<EditResponse> EditUserAsync(EditRequest request, string origin);
 
         Task SignOutAsync();
+
+        Task<int> GetActiveUsers();
+
+        Task<int> GetInactiveUsers();
+
     }
 
 }

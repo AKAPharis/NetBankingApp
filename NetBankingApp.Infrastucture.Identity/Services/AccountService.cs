@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NetBankingApp.Core.Application.Dtos.Account;
@@ -42,6 +43,16 @@ namespace NetBankingApp.Infrastucture.Identity.Services
         public async Task<SaveUserViewModel> GetByIdSaveViewModelAsync(string id)
         {
             return _mapper.Map<SaveUserViewModel>(await _userManager.FindByIdAsync(id));
+        }
+        public async Task<int> GetActiveUsers()
+        {
+            var users = await _userManager.Users.Where(x => x.IsActived).ToArrayAsync();
+            return users.Count();
+        }
+        public async Task<int> GetInactiveUsers()
+        {
+            var users = await _userManager.Users.Where(x => !x.IsActived).ToArrayAsync();
+            return users.Count();
         }
 
 

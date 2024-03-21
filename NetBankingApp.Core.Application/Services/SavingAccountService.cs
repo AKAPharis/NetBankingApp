@@ -17,6 +17,16 @@ namespace NetBankingApp.Core.Application.Services
             _savingAccountRepository = repo;
         }
 
+
+        public async Task<int> TodayTotal()
+        {
+            return await _savingAccountRepository.DailyTotal();
+        }
+        public async Task<int> Total()
+        {
+            return await _savingAccountRepository.Total();
+        }
+
         public override async Task<SaveSavingAccountViewModel> CreateAsync(SaveSavingAccountViewModel viewModel)
         {
             SavingAccount account;

@@ -5,6 +5,9 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
 {
     public interface ILoanService : IGenericService<SaveLoanViewModel,LoanViewModel,Loan>
     {
+        Task<int> TodayTotal();
+        Task<int> Total();
+
         Task PayDebt(int loanGuid, double amount, int savingAccountGuid);
 
     }
