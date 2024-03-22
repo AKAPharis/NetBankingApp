@@ -21,6 +21,10 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
         Task<int> GetActiveUsers();
 
         Task<int> GetInactiveUsers();
+        Task DeactivateUser(string id);
+
+        Task ActivateUser(string id);
+
 
     }
 

@@ -38,6 +38,7 @@ namespace NetBankingApp.Infrastucture.Persistence
             services.AddTransient<IPaymentLogRepository, PaymentLogRepository>();
             services.AddTransient<ISavingAccountRepository, SavingAccountRepository>();
             services.AddTransient<ITransactionLogRepository, TransactionLogRepository>();
+            services.AddTransient<IBeneficiaryRepository, BeneficiaryRepository>();
 
 
 

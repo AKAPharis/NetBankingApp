@@ -18,6 +18,8 @@ namespace NetBankingApp.Core.Application
             services.AddTransient<ITransactionLogService, TransactionLogService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ILogService, LogService>();
+            services.AddTransient<IBeneficiaryService, BeneficiaryService>();
+
 
 
 

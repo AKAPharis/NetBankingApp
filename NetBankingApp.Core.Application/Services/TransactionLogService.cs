@@ -24,7 +24,7 @@ namespace NetBankingApp.Core.Application.Services
 
         public async Task<CreateTransactionLogDTO> AddLog(CreateTransactionLogDTO logDTO)
         {
-            return _mapper.Map<CreatePaymentLogDTO>(await _transactionLogRepository.CreateAsync(_mapper.Map<PaymentLog>(logDTO)));
+            return _mapper.Map<CreateTransactionLogDTO>(await _transactionLogRepository.CreateAsync(_mapper.Map<TransactionLog>(logDTO)));
         }
 
         public async Task<int> DailyTotal()
