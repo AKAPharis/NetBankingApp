@@ -42,18 +42,18 @@ namespace NetBankingApp.Core.Application.Services
 
         public async Task<RegisterResponse> RegisterAsync(SaveUserViewModel vm, string origin)
         {
-            var user = await _accountService.RegisterUserAsync(_mapper.Map<RegisterRequest>(vm), origin);
-            if (user != null && vm.Role == Roles.Customer.ToString())
+            var response = await _accountService.RegisterUserAsync(_mapper.Map<RegisterRequest>(vm), origin);
+            if (response != null && !response.HasError && vm.Role == Roles.Customer.ToString())
             {
                 await _savingAccountService.CreateAsync(new SaveSavingAccountViewModel
                 {
-                   IdCustomer = user.Id,
+                   IdCustomer = response.Id,
                    Savings = vm.InitialAmount,
                    IsMain = true,
                 });
 
             }
-            return user;
+            return response;
         }
 
         public async Task<ResetPasswordResponse> ResetPasswordAsync(string token, string username)
@@ -95,6 +95,26 @@ namespace NetBankingApp.Core.Application.Services
         public async Task<UserViewModel> GetByUsernameAsync(string username)
         {
             return await _accountService.GetByUsernameAsync(username);
+        }
+
+        public async Task<int> GetActiveUsers()
+        {
+            return await _accountService.GetActiveUsers();
+        }
+
+        public async Task<int> GetInactiveUsers()
+        {
+            return await _accountService.GetInactiveUsers();
+        }
+
+        public async Task DeactivateUser(string id)
+        {
+            await _accountService.DeactivateUser(id);
+        }
+
+        public async Task ActivateUser(string id)
+        {
+            await _accountService.ActivateUser(id);
         }
     }
 }

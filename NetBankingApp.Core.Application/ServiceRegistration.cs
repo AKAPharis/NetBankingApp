@@ -11,8 +11,16 @@ namespace NetBankingApp.Core.Application
         {
 
             #region Services
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICreditCardService, CreditCardService>();
             services.AddTransient<ISavingAccountService, SavingAccountService>();
+            services.AddTransient<ILoanService, LoanService>();
+            services.AddTransient<IPaymentLogService, PaymentLogService>();
+            services.AddTransient<ITransactionLogService, TransactionLogService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ILogService, LogService>();
+            services.AddTransient<IBeneficiaryService, BeneficiaryService>();
+
+
 
 
             #endregion

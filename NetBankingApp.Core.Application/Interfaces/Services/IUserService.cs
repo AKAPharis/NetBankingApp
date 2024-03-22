@@ -15,5 +15,12 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
         Task<AuthenticationResponse> LoginAsync(LoginViewModel vm);
         Task<RegisterResponse> RegisterAsync(SaveUserViewModel vm, string origin);
         Task SignOutAsync();
+        Task<int> GetActiveUsers();
+
+        Task<int> GetInactiveUsers();
+
+        Task DeactivateUser(string id);
+
+        Task ActivateUser(string id);
     }
 }

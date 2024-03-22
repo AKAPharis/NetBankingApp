@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NetBankingApp.Core.Application.Dtos.Account;
@@ -35,6 +36,18 @@ namespace NetBankingApp.Infrastucture.Identity.Services
         {
             return _mapper.Map<UserViewModel>(await _userManager.FindByIdAsync(id));
         }
+        public async Task DeactivateUser(string id)
+        {
+            BankingUser user = await _userManager.FindByIdAsync(id);
+            user.IsActived = false;
+            await _userManager.UpdateAsync(user);
+        }
+        public async Task ActivateUser(string id)
+        {
+            BankingUser user = await _userManager.FindByIdAsync(id);
+            user.IsActived = true;
+            await _userManager.UpdateAsync(user);
+        }
         public async Task<UserViewModel> GetByUsernameAsync(string username)
         {
             return _mapper.Map<UserViewModel>(await _userManager.FindByNameAsync(username));
@@ -42,6 +55,16 @@ namespace NetBankingApp.Infrastucture.Identity.Services
         public async Task<SaveUserViewModel> GetByIdSaveViewModelAsync(string id)
         {
             return _mapper.Map<SaveUserViewModel>(await _userManager.FindByIdAsync(id));
+        }
+        public async Task<int> GetActiveUsers()
+        {
+            var users = await _userManager.Users.Where(x => x.IsActived).ToArrayAsync();
+            return users.Count();
+        }
+        public async Task<int> GetInactiveUsers()
+        {
+            var users = await _userManager.Users.Where(x => !x.IsActived).ToArrayAsync();
+            return users.Count();
         }
 
 
@@ -111,6 +134,13 @@ namespace NetBankingApp.Infrastucture.Identity.Services
             {
                 response.HasError = true;
                 response.Error = $"Email '{request.Email}' is already registered.";
+                return response;
+            }
+            var userWithSameDocumentId = await _userManager.Users.FirstOrDefaultAsync(x => x.DocumentId == request.DocumentId);
+            if (userWithSameEmail != null)
+            {
+                response.HasError = true;
+                response.Error = $"The document id '{request.DocumentId}' is already registered.";
                 return response;
             }
 
