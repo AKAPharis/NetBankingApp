@@ -1,4 +1,6 @@
-﻿namespace NetBankingApp.Core.Application.Interfaces.Services
+﻿using NetBankingApp.Core.Application.Interfaces.Services;
+
+namespace NetBankingApp.Core.Application.Services
 {
     public class PaymentService
     {
@@ -18,7 +20,7 @@
             _loanService = loanService;
         }
 
-        
+
 
     }
 }
