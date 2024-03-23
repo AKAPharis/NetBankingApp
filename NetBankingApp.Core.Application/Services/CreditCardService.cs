@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using NetBankingApp.Core.Application.Enums;
+using NetBankingApp.Core.Application.Helpers;
 using NetBankingApp.Core.Application.Interfaces.Repositories;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.CreditCard;
@@ -45,6 +47,19 @@ namespace NetBankingApp.Core.Application.Services
             await _creditCardRepository.UpdateAsync(creditCard, creditCard.Id);
         }
         #endregion
+
+        public override async Task<SaveCreditCardViewModel> CreateAsync(SaveCreditCardViewModel viewModel)
+        {
+            CreditCard account;
+            do
+            {
+                viewModel.Guid = GuidHelper.Guid((int)Products.CreditCard);
+                account = await _creditCardRepository.GetByIdAsync(int.Parse(viewModel.Guid));
+
+            } while (account != null);
+
+            return await base.CreateAsync(viewModel);
+        }
 
         public async Task<int> TodayTotal()
         {
