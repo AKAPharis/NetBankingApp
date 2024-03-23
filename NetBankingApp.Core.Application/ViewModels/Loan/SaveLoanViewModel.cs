@@ -3,7 +3,7 @@
     public class SaveLoanViewModel
     {
         public int Id { get; set; }
-        public int Guid { get; set; }
+        public string? Guid { get; set; }
         public double LoanAmount { get; set; }
 
         private double _debt;

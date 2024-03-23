@@ -17,7 +17,7 @@ namespace NetBankingApp.Core.Application.Services
         }
 
         #region Casi Terminados
-        public async Task PayDebt(int loanGuid, double amount, int savingAccountGuid)
+        public async Task PayDebt(string loanGuid, double amount, string savingAccountGuid)
         {
             Loan loan = await _loanRepository.GetByGuid(loanGuid);
             if (loan.Debt - amount < 0)

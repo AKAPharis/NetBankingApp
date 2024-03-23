@@ -10,10 +10,10 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
 
 
 
-        Task<SavingAccountViewModel> GetByGuid(int guid);
-        Task Deposit(double amount, int guid);
+        Task<SavingAccountViewModel> GetByGuid(string guid);
+        Task Deposit(double amount, string guid);
         Task DepositToMain(double amount, string customerId);
-        Task<double> Withdraw(int guid, double amount);
+        Task<double> Withdraw(string guid, double amount);
         
     }
 }

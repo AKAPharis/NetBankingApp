@@ -39,7 +39,7 @@ namespace NetBankingApp.Core.Application.Services
             return await base.CreateAsync(viewModel);
         }
 
-        public async Task Deposit(double amount, int guid)
+        public async Task Deposit(double amount, string guid)
         {
             SavingAccount account = await _savingAccountRepository.GetByGuid(guid);
             account.Savings += amount;
@@ -53,12 +53,12 @@ namespace NetBankingApp.Core.Application.Services
             await _savingAccountRepository.UpdateAsync(account, account.Id);
         }
 
-        public async Task<SavingAccountViewModel> GetByGuid(int guid)
+        public async Task<SavingAccountViewModel> GetByGuid(string guid)
         {
             return _mapper.Map<SavingAccountViewModel>(await _savingAccountRepository.GetByGuid(guid));
         }
 
-        public async Task<double> Withdraw(int guid, double amount)
+        public async Task<double> Withdraw(string guid, double amount)
         {
             SavingAccount account = await _savingAccountRepository.GetByGuid(guid);
             if(account.Savings - amount > 0)

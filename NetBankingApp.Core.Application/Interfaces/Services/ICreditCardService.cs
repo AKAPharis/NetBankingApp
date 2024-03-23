@@ -8,7 +8,7 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
         Task<int> TodayTotal();
         Task<int> Total();
 
-        Task AdvanceCredit(int creditCardGuid, double amount, int savingAccountGuid);
-        Task PayDebt(int creditCardGuid, double amount, int savingAccountGuid);
+        Task AdvanceCredit(string creditCardGuid, double amount, string savingAccountGuid);
+        Task PayDebt(string creditCardGuid, double amount, string savingAccountGuid);
     }
 }

@@ -18,10 +18,10 @@ namespace NetBankingApp.Core.Application.Services
             _savingAccountService = savingAccountService;
         }
         #region Casi Terminados
-        public async Task AdvanceCredit(int creditCardGuid, double amount, int savingAccountGuid)
+        public async Task AdvanceCredit(string creditCardGuid, double amount, string savingAccountGuid)
         {
             CreditCard creditCard = await _creditCardRepository.GetByGuid(creditCardGuid);
-            SavingAccountViewModel savingAccount = await _savingAccountService.GetByIdAsync(savingAccountGuid);
+            SavingAccountViewModel savingAccount = await _savingAccountService.GetByGuid(savingAccountGuid);
 
             if (creditCard.Debt <= creditCard.LimitAmount)
             {
@@ -35,7 +35,7 @@ namespace NetBankingApp.Core.Application.Services
 
         }
 
-        public async Task PayDebt(int creditCardGuid, double amount, int savingAccountGuid)
+        public async Task PayDebt(string creditCardGuid, double amount, string savingAccountGuid)
         {
             CreditCard creditCard = await _creditCardRepository.GetByGuid(creditCardGuid);
             if (creditCard.Debt - amount < 0)
