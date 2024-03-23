@@ -7,5 +7,6 @@ namespace NetBankingApp.Core.Application.Interfaces.Repositories
         Task<int> Total();
         Task<int> DailyTotal();
         Task<CreditCard> GetByGuid(string guid);
+        Task<List<CreditCard>> GetByCustomer(string idCustomer);
     }
 }

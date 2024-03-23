@@ -3,6 +3,7 @@ using NetBankingApp.Core.Application.Interfaces.Repositories;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.Loan;
 using NetBankingApp.Core.Domain.Models;
+using System.ComponentModel;
 
 namespace NetBankingApp.Core.Application.Services
 {
@@ -39,6 +40,11 @@ namespace NetBankingApp.Core.Application.Services
             }
         }
 
+
+        public async Task<List<LoanViewModel>> GetByCustomer(string idCustomer)
+        {
+            return _mapper.Map<List<LoanViewModel>>(await _loanRepository.GetByCustomer(idCustomer));
+        }
 
         public override async Task<SaveLoanViewModel> CreateAsync(SaveLoanViewModel viewModel)
         {

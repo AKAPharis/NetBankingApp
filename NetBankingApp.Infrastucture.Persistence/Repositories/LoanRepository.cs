@@ -20,6 +20,10 @@ namespace NetBankingApp.Infrastucture.Persistence.Repositories
             return await _dbSet.FirstOrDefaultAsync(x => x.Guid == guid);
         }
 
+        public async Task<List<Loan>> GetByCustomer(string idCustomer)
+        {
+            return await _dbSet.Where(x => x.IdCustomer == idCustomer).ToListAsync();
+        }
         public Task<int> Total()
         {
             return _dbSet.CountAsync();

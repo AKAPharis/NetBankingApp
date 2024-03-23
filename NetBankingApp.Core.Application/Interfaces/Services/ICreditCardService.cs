@@ -1,4 +1,5 @@
 ﻿using NetBankingApp.Core.Application.ViewModels.CreditCard;
+using NetBankingApp.Core.Application.ViewModels.SavingAccount;
 using NetBankingApp.Core.Domain.Models;
 
 namespace NetBankingApp.Core.Application.Interfaces.Services
@@ -7,6 +8,7 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
     {
         Task<int> TodayTotal();
         Task<int> Total();
+        Task<List<CreditCardViewModel>> GetByCustomer(string idCustomer);
 
         Task AdvanceCredit(string creditCardGuid, double amount, string savingAccountGuid);
         Task PayDebt(string creditCardGuid, double amount, string savingAccountGuid);

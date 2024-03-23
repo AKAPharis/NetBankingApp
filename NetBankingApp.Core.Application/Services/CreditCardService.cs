@@ -2,6 +2,7 @@
 using NetBankingApp.Core.Application.Interfaces.Repositories;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.CreditCard;
+using NetBankingApp.Core.Application.ViewModels.Loan;
 using NetBankingApp.Core.Application.ViewModels.SavingAccount;
 using NetBankingApp.Core.Domain.Models;
 
@@ -27,6 +28,10 @@ namespace NetBankingApp.Core.Application.Services
             }
         }
 
+        public async Task<List<CreditCardViewModel>> GetByCustomer(string idCustomer)
+        {
+            return _mapper.Map<List<CreditCardViewModel>>(await _creditCardRepository.GetByCustomer(idCustomer));
+        }
         #region Casi Terminados
         public async Task AdvanceCredit(string creditCardGuid, double amount, string savingAccountGuid)
         {

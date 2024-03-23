@@ -3,6 +3,7 @@ using NetBankingApp.Core.Application.Enums;
 using NetBankingApp.Core.Application.Helpers;
 using NetBankingApp.Core.Application.Interfaces.Repositories;
 using NetBankingApp.Core.Application.Interfaces.Services;
+using NetBankingApp.Core.Application.ViewModels.CreditCard;
 using NetBankingApp.Core.Application.ViewModels.SavingAccount;
 using NetBankingApp.Core.Domain.Models;
 using System;
@@ -51,6 +52,11 @@ namespace NetBankingApp.Core.Application.Services
             SavingAccount account = await _savingAccountRepository.GetMain(customerId);
             account.Savings += amount;
             await _savingAccountRepository.UpdateAsync(account, account.Id);
+        }
+
+        public async Task<List<SavingAccountViewModel>> GetByCustomer(string idCustomer)
+        {
+            return _mapper.Map<List<SavingAccountViewModel>>(await _savingAccountRepository.GetByCustomer(idCustomer));
         }
 
         public async Task<SavingAccountViewModel> GetByGuid(string guid)
