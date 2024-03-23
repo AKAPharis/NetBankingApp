@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using NetBankingApp.Core.Application.Enums;
+using NetBankingApp.Core.Application.Helpers;
 using NetBankingApp.Core.Application.Interfaces.Repositories;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.Loan;
@@ -48,12 +50,15 @@ namespace NetBankingApp.Core.Application.Services
 
         public override async Task<SaveLoanViewModel> CreateAsync(SaveLoanViewModel viewModel)
         {
-            var result = await base.CreateAsync(viewModel);
-            if (result != null)
+            Loan account;
+            do
             {
-                await _savingAccountService.DepositToMain(result.LoanAmount, result.IdCustomer);
-            }
-            return result;
+                viewModel.Guid = GuidHelper.Guid((int)Products.Loan);
+                account = await _loanRepository.GetByIdAsync(int.Parse(viewModel.Guid));
+
+            } while (account != null);
+
+            return await base.CreateAsync(viewModel);
         }
 
         public async Task<int> TodayTotal()
