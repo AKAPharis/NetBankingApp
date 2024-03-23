@@ -30,6 +30,16 @@ namespace NetBankingApp.Core.Application.Services
 
         #endregion
 
+        public override async Task DeleteAsync(int id)
+        {
+            var loan = await _loanRepository.GetByIdAsync(id);
+            if (loan.Debt == 0)
+            {
+                await _loanRepository.DeleteAsync(loan);
+            }
+        }
+
+
         public override async Task<SaveLoanViewModel> CreateAsync(SaveLoanViewModel viewModel)
         {
             var result = await base.CreateAsync(viewModel);

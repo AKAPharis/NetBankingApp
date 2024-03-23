@@ -17,6 +17,16 @@ namespace NetBankingApp.Core.Application.Services
             _creditCardRepository = repo;
             _savingAccountService = savingAccountService;
         }
+
+        public override async Task DeleteAsync(int id)
+        {
+            var creditCard = await _creditCardRepository.GetByIdAsync(id);
+            if(creditCard.Debt == 0)
+            {
+                await _creditCardRepository.DeleteAsync(creditCard);
+            }
+        }
+
         #region Casi Terminados
         public async Task AdvanceCredit(string creditCardGuid, double amount, string savingAccountGuid)
         {
