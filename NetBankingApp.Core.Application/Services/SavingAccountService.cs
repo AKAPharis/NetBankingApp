@@ -69,5 +69,13 @@ namespace NetBankingApp.Core.Application.Services
             }
             return 0;
         }
+        public override async Task DeleteAsync(int id)
+        {
+            var account = await _savingAccountRepository.GetByIdAsync(id);
+            if (!account.IsMain)
+            {
+                await _savingAccountRepository.DeleteAsync(account);
+            }
+        }
     }
 }
