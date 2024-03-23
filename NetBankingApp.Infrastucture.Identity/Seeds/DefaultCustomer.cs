@@ -16,6 +16,7 @@ namespace NetBankingApp.Infrastucture.Identity.Seeds
             defaultUser.DocumentId = "001-0250013-1";
             defaultUser.EmailConfirmed = true;
             defaultUser.PhoneNumberConfirmed = true;
+            defaultUser.IsActived = true;
 
             if (userManager.Users.All(u => u.Id != defaultUser.Id))
             {
