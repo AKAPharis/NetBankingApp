@@ -13,6 +13,7 @@ namespace NetBankingApp.Infrastucture.Identity.Seeds
             defaultUser.Email = "defaultcustomer@gmail.com";
             defaultUser.FirstName = "Default";
             defaultUser.LastName = "Customer";
+            defaultUser.DocumentId = "001-0250013-1";
             defaultUser.EmailConfirmed = true;
             defaultUser.PhoneNumberConfirmed = true;
 

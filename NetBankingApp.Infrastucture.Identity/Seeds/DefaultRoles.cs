@@ -10,7 +10,6 @@ namespace NetBankingApp.Infrastucture.Identity.Seeds
         {
             await roleManager.CreateAsync(new IdentityRole(Roles.Customer.ToString()));
             await roleManager.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
-
         }
     }
 }

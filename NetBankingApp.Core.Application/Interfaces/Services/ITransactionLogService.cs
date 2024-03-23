@@ -11,6 +11,6 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
     {
         Task<int> Total();
         Task<int> DailyTotal();
-        Task<CreateTransactionLogDTO> AddLog(CreateTransactionLogDTO logDTO);
+        //Task<CreateTransactionLogDTO> AddLog(CreateTransactionLogDTO logDTO);
     }
 }

@@ -2,6 +2,7 @@
 using NetBankingApp.Core.Application.Dtos.Account;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.Account;
+using NetBankingApp.Core.Application.Helpers;
 
 namespace WebApp.NetBankingApp.Controllers
 {
@@ -30,7 +31,7 @@ namespace WebApp.NetBankingApp.Controllers
             AuthenticationResponse userVm = await _userService.LoginAsync(vm);
             if (userVm != null && userVm.HasError != true)
             {
-                // Falta lo de la sesion
+                HttpContext.Session.Set<AuthenticationResponse>("user", userVm);
                 return RedirectToRoute(new { controller = "Home", action = "Index" });
             }
             else

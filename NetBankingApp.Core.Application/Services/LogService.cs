@@ -34,6 +34,7 @@ namespace NetBankingApp.Core.Application.Services
             //POR QUE TANTAS LLAMADAS POR DIOS
 
             DashBoardViewModel dashBoardViewModel = new();
+
             dashBoardViewModel.TotalProducts = 0;
             dashBoardViewModel.TotalProducts += await _loanService.Total();
             dashBoardViewModel.TotalProducts += await _creditCardService.Total();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NetBankingApp.Core.Application.Interfaces.Services;
 using System.Diagnostics;
 using WebApp.NetBankingApp.Models;
 
@@ -6,29 +7,18 @@ namespace WebApp.NetBankingApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> _logger; 
+        private readonly ILogService _logService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ILogService logService)
         {
+            _logService = logService;
             _logger = logger;
         }
-        //asdfasdfdsaf
-        public IActionResult Index()
-        {
 
-            //adsfaddfsdsfdfsafddfsdfs
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public async Task<IActionResult> Index()
+        { 
+            return View(await _logService.GetLogs());
         }
     }
 }
