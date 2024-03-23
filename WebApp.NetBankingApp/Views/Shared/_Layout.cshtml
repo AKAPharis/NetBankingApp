@@ -24,7 +24,7 @@
 </head>
 <body>
 
-    <div class="container-fluid p-0 @(User != null ? "" : "overflow-hidden")">
+    <div class="container-fluid @(User != null ? "" : "overflow-hidden p-0")">
         <div class="row">
             @if (User != null)
             {
@@ -88,15 +88,15 @@
 
                                     <div class="collapse" id="payments-collapse">
                                         <ul class="btn-toggle-nav ms-5 list-unstyled fw-normal pb-1 small">
-                                            <li>
+                                            <li class="mt-2 mb-2">
                                                 <a href="#"
                                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Express</a>
                                             </li>
-                                            <li>
+                                            <li class="mb-2">
                                                 <a href="#"
                                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Credit card</a>
                                             </li>
-                                            <li>
+                                            <li class="mb-2">
                                                 <a href="#"
                                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Loan</a>
                                             </li>
@@ -210,7 +210,7 @@
                 </div>
             }
 
-            <div class="@(User != null ? "col-10 p-0" : "p-0")">
+            <div class="@(User != null ? "col-10 p-0" : "")">
                 @if (User != null)
                 {
                     <div class="bg-white py-3 d-flex justify-content-end align-items-center">
