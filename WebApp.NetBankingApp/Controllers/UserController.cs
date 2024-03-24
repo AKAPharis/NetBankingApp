@@ -37,7 +37,7 @@ namespace WebApp.NetBankingApp.Controllers
             {
                 HttpContext.Session.Set<AuthenticationResponse>("user", userVm);
 
-                if (User.IsInRole(Roles.Customer.ToString()))
+                if (userVm.Roles.Any(r => r == "Customer"))
                 {
                     return RedirectToRoute(new { controller = "Home", action = "CustomerHome" });
                 }
