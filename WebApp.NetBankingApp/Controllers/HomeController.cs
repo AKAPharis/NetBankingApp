@@ -20,5 +20,10 @@ namespace WebApp.NetBankingApp.Controllers
         { 
             return View(await _logService.GetLogs());
         }
+
+        public IActionResult CustomerDashboard()
+        {
+            return View();
+        }
     }
 }
