@@ -4,7 +4,6 @@ using NetBankingApp.Core.Application.Enums;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.Account;
 using NetBankingApp.Core.Application.ViewModels.SavingAccount;
-using System.Diagnostics.CodeAnalysis;
 
 namespace NetBankingApp.Core.Application.Services
 {

@@ -22,10 +22,10 @@ namespace NetBankingApp.Core.Application.Services
             _mapper = mapper;
         }
 
-        //public async Task<CreateTransactionLogDTO> AddLog(CreateTransactionLogDTO logDTO)
-        //{
-        //    return _mapper.Map<CreateTransactionLogDTO>(await _transactionLogRepository.CreateAsync(_mapper.Map<TransactionLog>(logDTO)));
-        //}
+        public async Task<CreateTransactionLogDTO> AddLog(CreateTransactionLogDTO logDTO)
+        {
+            return _mapper.Map<CreateTransactionLogDTO>(await _transactionLogRepository.CreateAsync(_mapper.Map<TransactionLog>(logDTO)));
+        }
 
         public async Task<int> DailyTotal()
         {
