@@ -3,6 +3,7 @@ using NetBankingApp.Core.Application.Dtos.Account;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.Account;
 using NetBankingApp.Core.Application.Helpers;
+using NetBankingApp.Infrastucture.Identity.Seeds;
 
 namespace WebApp.NetBankingApp.Controllers
 {
@@ -32,7 +33,12 @@ namespace WebApp.NetBankingApp.Controllers
             if (userVm != null && userVm.HasError != true)
             {
                 HttpContext.Session.Set<AuthenticationResponse>("user", userVm);
-                return RedirectToRoute(new { controller = "Home", action = "Index" });
+                
+                if(User.IsInRole("DefaultAdmin"))
+                {
+                    return RedirectToRoute(new { controller = "Home", action = "Index" });
+                }
+                return RedirectToRoute(new { controller = "Home", action = "CustomerDashboard" });
             }
             else
             {

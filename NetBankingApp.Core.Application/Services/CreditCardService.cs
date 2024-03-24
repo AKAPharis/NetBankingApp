@@ -61,6 +61,7 @@ namespace NetBankingApp.Core.Application.Services
             creditCard.Debt -= withdrawResult;
             await _creditCardRepository.UpdateAsync(creditCard, creditCard.Id);
         }
+
         #endregion
 
         public override async Task<SaveCreditCardViewModel> CreateAsync(SaveCreditCardViewModel viewModel)
