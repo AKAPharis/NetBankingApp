@@ -1,5 +1,7 @@
-﻿using NetBankingApp.Core.Application.ViewModels.SavingAccount;
+﻿using NetBankingApp.Core.Application.Dtos.Transaction;
+using NetBankingApp.Core.Application.ViewModels.SavingAccount;
 using NetBankingApp.Core.Domain.Models;
+using System.Transactions;
 
 namespace NetBankingApp.Core.Application.Interfaces.Services
 {
@@ -11,8 +13,8 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
 
         Task<List<SavingAccountViewModel>> GetByCustomer(string idCustomer);
         Task<SavingAccountViewModel> GetByGuid(string guid);
-        Task Deposit(double amount, string guid);
-        Task DepositToMain(double amount, string customerId);
+        Task<TransactionResponse> Deposit(double amount, string guid);
+        Task<TransactionResponse> DepositToMain(double amount, string customerId);
         Task<double> Withdraw(string guid, double amount);
         
     }

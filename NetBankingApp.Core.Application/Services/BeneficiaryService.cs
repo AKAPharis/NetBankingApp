@@ -39,5 +39,9 @@ namespace NetBankingApp.Core.Application.Services
                 });
             return beneficiaries;
         }
+        public async Task<BeneficiaryViewModel> GetBeneficiary(string idUser, string idBeneficiary)
+        {
+            return _mapper.Map<BeneficiaryViewModel>(await _beneficiaryRepository.GetBeneficiary(idUser,idBeneficiary));
+        }
     }
 }

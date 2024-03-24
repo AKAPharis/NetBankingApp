@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetBankingApp.Core.Application.Dtos.Logs
+namespace NetBankingApp.Core.Application.ViewModels.Transaction
 {
-    public class CreateTransactionLogDTO
+    public class TransactionExpressViewModel
     {
         public string GuidAccountOrigin { get; set; }
         public string GuidAccountDestination { get; set; }

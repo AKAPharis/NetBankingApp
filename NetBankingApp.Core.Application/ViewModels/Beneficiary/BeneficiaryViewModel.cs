@@ -10,7 +10,7 @@ namespace NetBankingApp.Core.Application.ViewModels.Beneficiary
     {
         public string IdUser { get; set; }
         public string IdBeneficiary { get; set; }
-        public int BeneficiaryAccountGuid { get; set; }
+        public string BeneficiaryAccountGuid { get; set; }
         public string NickName { get; set; }
         public string BeneficiaryFirstName { get; set; }
         public string BeneficiaryLastName { get; set; }
