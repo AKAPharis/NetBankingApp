@@ -4,7 +4,6 @@ using NetBankingApp.Core.Application.Enums;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.Account;
 using NetBankingApp.Core.Application.ViewModels.SavingAccount;
-using System.Diagnostics.CodeAnalysis;
 
 namespace NetBankingApp.Core.Application.Services
 {
@@ -25,9 +24,6 @@ namespace NetBankingApp.Core.Application.Services
         {
             return await _accountService.ConfirmAccountAsync(userId, token);
         }
-
-
-
 
         public async Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordViewModel vm, string origin)
         {

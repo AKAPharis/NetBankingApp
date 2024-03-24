@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using System.Diagnostics;
 using WebApp.NetBankingApp.Models;
 
 namespace WebApp.NetBankingApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger; 
@@ -21,7 +23,7 @@ namespace WebApp.NetBankingApp.Controllers
             return View(await _logService.GetLogs());
         }
 
-        public IActionResult CustomerDashboard()
+        public IActionResult CustomerHome()
         {
             return View();
         }

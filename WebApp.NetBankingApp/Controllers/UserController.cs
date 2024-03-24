@@ -4,9 +4,12 @@ using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.Account;
 using NetBankingApp.Core.Application.Helpers;
 using NetBankingApp.Infrastucture.Identity.Seeds;
+using Microsoft.AspNetCore.Authorization;
+using NetBankingApp.Core.Application.Enums;
 
 namespace WebApp.NetBankingApp.Controllers
 {
+    //[Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -33,12 +36,15 @@ namespace WebApp.NetBankingApp.Controllers
             if (userVm != null && userVm.HasError != true)
             {
                 HttpContext.Session.Set<AuthenticationResponse>("user", userVm);
-                
-                if(User.IsInRole("DefaultAdmin"))
+
+                if (User.IsInRole(Roles.Customer.ToString()))
+                {
+                    return RedirectToRoute(new { controller = "Home", action = "CustomerHome" });
+                }
+                else
                 {
                     return RedirectToRoute(new { controller = "Home", action = "Index" });
                 }
-                return RedirectToRoute(new { controller = "Home", action = "CustomerDashboard" });
             }
             else
             {
@@ -46,6 +52,18 @@ namespace WebApp.NetBankingApp.Controllers
                 vm.Error = userVm.Error;
                 return View(vm);
             }
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await _userService.SignOutAsync();
+            HttpContext.Session.Remove("user");
+            return RedirectToRoute(new { controller = "User", action = "Index" });
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
