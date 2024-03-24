@@ -7,7 +7,7 @@ using NetBankingApp.Core.Application.ViewModels.Transaction;
 
 namespace NetBankingApp.Core.Application.Services
 {
-    public class TransactionService
+    public class TransactionService : ITransactionService
     {
         private readonly ITransactionLogService _transactionLogService;
         private readonly ISavingAccountService _savingAccountService;
@@ -41,7 +41,7 @@ namespace NetBankingApp.Core.Application.Services
                 response.HasError = true;
                 return response;
             }
-            var depositResult = await _savingAccountService.Deposit(vm.Amount,vm.GuidAccountDestination);
+            var depositResult = await _savingAccountService.Deposit(vm.Amount, vm.GuidAccountDestination);
             if (depositResult.HasError)
             {
                 return depositResult;
@@ -52,7 +52,7 @@ namespace NetBankingApp.Core.Application.Services
                 GuidAccountDestination = vm.GuidAccountDestination,
                 GuidAccountOrigin = vm.GuidAccountOrigin
             });
-            
+
 
             return response;
         }
@@ -60,7 +60,7 @@ namespace NetBankingApp.Core.Application.Services
         {
             TransactionResponse response = new();
             var beneficiary = await _beneficiaryService.GetBeneficiary(vm.IdUser, vm.IdBeneficiary);
-            if(beneficiary == null)
+            if (beneficiary == null)
             {
                 response.Error = "The beneficiary was not found";
                 response.HasError = true;

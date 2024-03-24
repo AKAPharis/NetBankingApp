@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NetBankingApp.Core.Application.Dtos.Payment;
 using NetBankingApp.Core.Application.Enums;
 using NetBankingApp.Core.Application.Helpers;
 using NetBankingApp.Core.Application.Interfaces.Repositories;
@@ -19,19 +20,41 @@ namespace NetBankingApp.Core.Application.Services
             _loanRepository = repo;
         }
 
-        #region Casi Terminados
-        public async Task PayDebt(string loanGuid, double amount, string savingAccountGuid)
+        public async Task<PaymentResponse> PayDebt(string loanGuid, double amount, string savingAccountGuid)
         {
+            PaymentResponse response = new();
             Loan loan = await _loanRepository.GetByGuid(loanGuid);
+            if (loan == null)
+            {
+                response.Error = $"There is not a loan with the guid {loanGuid}";
+                response.HasError = true;
+                return response;
+            }
             if (loan.Debt - amount < 0)
                 amount = loan.Debt;
 
             double withdrawResult = await _savingAccountService.Withdraw(savingAccountGuid, amount);
+            if (withdrawResult == 0)
+            {
+                response.Error = $"There was an error withdrawing from the saving account";
+                response.HasError = true;
+                return response;
+            }
             loan.Debt -= withdrawResult;
-            await _loanRepository.UpdateAsync(loan, loan.Id);
+            var result = await _loanRepository.UpdateAsync(loan, loan.Id);
+            if (result == null)
+            {
+
+                response.Error = $"There was an error updating the debt of the loan";
+                response.HasError = true;
+                return response;
+
+            }
+
+
+            return response;
         }
 
-        #endregion
 
         public override async Task DeleteAsync(int id)
         {

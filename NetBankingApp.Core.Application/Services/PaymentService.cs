@@ -6,7 +6,7 @@ using NetBankingApp.Core.Application.ViewModels.Payment;
 
 namespace NetBankingApp.Core.Application.Services
 {
-    public class PaymentService
+    public class PaymentService : IPaymentService
     {
         IPaymentLogService _paymentLogService;
         ISavingAccountService _savingAccountService;
@@ -28,9 +28,12 @@ namespace NetBankingApp.Core.Application.Services
         {
             PaymentResponse response = new();
 
-            await _loanService.PayDebt(vm.LoanGuid, vm.Amount, vm.SavingAccountGuid);
-
-            await _paymentLogService.AddLog(new CreatePaymentLogDTO 
+            var result = await _loanService.PayDebt(vm.LoanGuid, vm.Amount, vm.SavingAccountGuid);
+            if (result.HasError)
+            {
+                return result;
+            }
+            await _paymentLogService.AddLog(new CreatePaymentLogDTO
             {
                 GuidAccountOrigin = vm.SavingAccountGuid,
                 GuidProductDestination = vm.LoanGuid,
@@ -44,8 +47,11 @@ namespace NetBankingApp.Core.Application.Services
         {
             PaymentResponse response = new();
 
-            await _creditCardService.PayDebt(vm.CreditCardGuid, vm.Amount, vm.SavingAccountGuid);
-
+            var result = await _creditCardService.PayDebt(vm.CreditCardGuid, vm.Amount, vm.SavingAccountGuid);
+            if (result.HasError)
+            {
+                return result;
+            }
             await _paymentLogService.AddLog(new CreatePaymentLogDTO
             {
                 GuidAccountOrigin = vm.SavingAccountGuid,

@@ -1,4 +1,5 @@
-﻿using NetBankingApp.Core.Application.ViewModels.Loan;
+﻿using NetBankingApp.Core.Application.Dtos.Payment;
+using NetBankingApp.Core.Application.ViewModels.Loan;
 using NetBankingApp.Core.Application.ViewModels.SavingAccount;
 using NetBankingApp.Core.Domain.Models;
 
@@ -10,7 +11,7 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
         Task<int> Total();
         Task<List<LoanViewModel>> GetByCustomer(string idCustomer);
 
-        Task PayDebt(string loanGuid, double amount, string savingAccountGuid);
+        Task<PaymentResponse> PayDebt(string loanGuid, double amount, string savingAccountGuid);
 
     }
 }
