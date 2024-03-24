@@ -4,9 +4,11 @@ using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.Account;
 using NetBankingApp.Core.Application.Helpers;
 using NetBankingApp.Infrastucture.Identity.Seeds;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.NetBankingApp.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
