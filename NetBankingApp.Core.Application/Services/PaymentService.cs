@@ -1,4 +1,8 @@
-﻿using NetBankingApp.Core.Application.Interfaces.Services;
+﻿using NetBankingApp.Core.Application.Dtos.Logs;
+using NetBankingApp.Core.Application.Dtos.Payment;
+using NetBankingApp.Core.Application.Interfaces.Services;
+using NetBankingApp.Core.Application.ViewModels.CreditCard;
+using NetBankingApp.Core.Application.ViewModels.Payment;
 
 namespace NetBankingApp.Core.Application.Services
 {
@@ -20,7 +24,36 @@ namespace NetBankingApp.Core.Application.Services
             _loanService = loanService;
         }
 
+        public async Task<PaymentResponse> LoanPayment(LoanPaymentViewModel vm)
+        {
+            PaymentResponse response = new();
 
+            await _loanService.PayDebt(vm.LoanGuid, vm.Amount, vm.SavingAccountGuid);
 
+            await _paymentLogService.AddLog(new CreatePaymentLogDTO 
+            {
+                GuidAccountOrigin = vm.SavingAccountGuid,
+                GuidProductDestination = vm.LoanGuid,
+                Amount = vm.Amount
+            });
+
+            return response;
+        }
+
+        public async Task<PaymentResponse> CreditPayment(CreditPaymentViewModel vm)
+        {
+            PaymentResponse response = new();
+
+            await _creditCardService.PayDebt(vm.CreditCardGuid, vm.Amount, vm.SavingAccountGuid);
+
+            await _paymentLogService.AddLog(new CreatePaymentLogDTO
+            {
+                GuidAccountOrigin = vm.SavingAccountGuid,
+                GuidProductDestination = vm.CreditCardGuid,
+                Amount = vm.Amount
+            });
+
+            return response;
+        }
     }
 }
