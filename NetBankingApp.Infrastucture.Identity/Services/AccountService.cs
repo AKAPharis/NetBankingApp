@@ -66,7 +66,10 @@ namespace NetBankingApp.Infrastucture.Identity.Services
             var users = await _userManager.Users.Where(x => !x.IsActived).ToArrayAsync();
             return users.Count();
         }
-
+        public async Task<List<UserViewModel>> GetAll()
+        {
+            return _mapper.Map<List<UserViewModel>>(await _userManager.Users.ToListAsync());
+        }
 
         public async Task<AuthenticationResponse> AuthenticateAsync(AuthenticationRequest request)
         {

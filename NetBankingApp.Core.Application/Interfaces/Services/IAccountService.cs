@@ -15,7 +15,7 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
         Task<ResetPasswordResponse> ResetPasswordAsync(ResetPasswordRequest request);
         Task<RegisterResponse> RegisterUserAsync(RegisterRequest request, string origin);
         Task<EditResponse> EditUserAsync(EditRequest request, string origin);
-
+        Task<List<UserViewModel>> GetAll();
         Task SignOutAsync();
 
         Task<int> GetActiveUsers();
