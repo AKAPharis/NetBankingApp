@@ -91,19 +91,19 @@
                                     <div class="collapse" id="payments-collapse">
                                         <ul class="btn-toggle-nav ms-5 list-unstyled fw-normal pb-1 small">
                                             <li class="mt-2 mb-2">
-                                                <a href="#"
+                                                <a asp-controller="Transaction" asp-action="TransferExpress"
                                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Express</a>
                                             </li>
                                             <li class="mb-2">
-                                                <a href="#"
+                                                <a asp-controller="Pay" asp-action="CreditPayment"
                                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Credit card</a>
                                             </li>
                                             <li class="mb-2">
-                                                <a href="#"
+                                                <a asp-controller="Pay" asp-action="LoanPayment"
                                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Loan</a>
                                             </li>
                                             <li>
-                                                <a href="#"
+                                                <a asp-controller="Transaction" asp-action="TransferToBeneficiary"
                                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded">Beneficiaries</a>
                                             </li>
                                         </ul>
@@ -111,7 +111,7 @@
                                 </li>
 
                                 <li class="mb-2 normalText">
-                                    <a class="btn d-inline-flex align-items-center rounded border-0">
+                                    <a class="btn d-inline-flex align-items-center rounded border-0" asp-controller="Beneficiary" asp-action="Index">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                              width="18"
                                              height="18"
@@ -126,7 +126,7 @@
                                 </li>
 
                                 <li class="mb-2 normalText">
-                                    <a class="btn d-inline-flex align-items-center rounded border-0">
+                                    <a class="btn d-inline-flex align-items-center rounded border-0" asp-controller="Credit" asp-action="AdvanceCredit">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                              width="18"
                                              height="18"
@@ -141,7 +141,7 @@
                                 </li>
 
                                 <li class="mb-2 normalText">
-                                    <a class="btn d-inline-flex align-items-center rounded border-0">
+                                    <a class="btn d-inline-flex align-items-center rounded border-0" asp-controller="Transaction" asp-action="TransferToAccount">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                              width="18"
                                              height="18"

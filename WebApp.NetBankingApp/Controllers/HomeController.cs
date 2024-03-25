@@ -34,13 +34,13 @@ namespace WebApp.NetBankingApp.Controllers
         public async Task<IActionResult> CustomerHome()
         {
 
-            string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
-            CustomerHomeViewModel home = new();
-            home.Loans = await _loanService.GetByCustomer(idCustomer);
-            home.CreditCards = await _creditCardService.GetByCustomer(idCustomer);
-            home.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
+            //string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
+            //CustomerHomeViewModel home = new();
+            //home.Loans = await _loanService.GetByCustomer(idCustomer);
+            //home.CreditCards = await _creditCardService.GetByCustomer(idCustomer);
+            //home.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
 
-            return View(home);
+            return View(/*home*/);
         }
     }
 }
