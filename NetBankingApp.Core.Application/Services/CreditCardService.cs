@@ -56,15 +56,8 @@ namespace NetBankingApp.Core.Application.Services
             if (vm.Amount <= creditCard.LimitAmount)
             {
                 creditCard.Debt += vm.Amount + (vm.Amount * 6.25/100);
-                savingAccount.Savings += vm.Amount;
+                await _savingAccountService.Deposit(vm.Amount, savingAccount.Guid);
 
-                var savingAccountResult = await _savingAccountService.UpdateAsync(_mapper.Map<SaveSavingAccountViewModel>(savingAccount), savingAccount.Id);
-                if (savingAccountResult == null)
-                {
-                    response.Error = $"There was an error updating the balance of the saving account";
-                    response.HasError = true;
-                    return response;
-                }
                 var creditCardResult = await _creditCardRepository.UpdateAsync(creditCard, creditCard.Id);
                 if (creditCardResult == null)
                 {
@@ -72,6 +65,12 @@ namespace NetBankingApp.Core.Application.Services
                     response.HasError = true;
                     return response;
                 }
+            }
+            else
+            {
+                response.Error = $"The amount inserted was bigger than the limit of the credit card";
+                response.HasError = true;
+                return response;
             }
             return response;
 
