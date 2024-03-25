@@ -10,9 +10,24 @@
               <div class="d-flex justify-content-center">
                 <div class="py-5 px-5 bg-white rounded-4 col-6">
 
-                  <form method="post" asp-controller="User" asp-action="Register">
+                  <form method="post" asp-controller="User" asp-action="Create">
                       <div class="mb-4 d-flex justify-content-center">
                           <div class="col-8">
+                            @if (Model.HasError)
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                                    <p>@Model.Error</p>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
+                            <div class="mb-3">
+                                <label for="roles" class="fw-bold">Select a role:</label>
+                                <select class="form-select" asp-for="Role" id="roles">
+                                    <option value="Admin">Admin</option>
+                                    <option value="Customer">Customer</option>
+                                </select>
+                            </div>
+
                               <div class="mb-3">
                                   <label asp-for="FirstName" class="form-label fw-bold">First name</label>
                                   <input asp-for="FirstName" class="form-control">
@@ -63,6 +78,9 @@
                                   <input asp-for="ConfirmPassword" id="ConfirmPassword" class="form-control">
                                   <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                               </div>
+                            <div class="mb-3 mt-3">
+                                <div id="addFieldCustomer"></div>
+                            </div>
                           </div>
                 
                       </div>

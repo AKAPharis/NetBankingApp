@@ -54,6 +54,18 @@ namespace WebApp.NetBankingApp.Controllers
             }
         }
 
+        public async Task<IActionResult> DeactivateUser(string Id)
+        {
+            await _userService.DeactivateUser(Id);
+            return RedirectToAction("AdminUser");
+        }
+
+        public async Task<IActionResult> ActivateUser(string Id)
+        {
+            await _userService.ActivateUser(Id);
+            return RedirectToAction("AdminUser");
+        }
+
         public async Task<IActionResult> AdminUser()
         {
             return View(await _userService.GetAll());
@@ -61,7 +73,25 @@ namespace WebApp.NetBankingApp.Controllers
 
         public IActionResult Create()
         {
-            return View("SaveUser");
+            return View("SaveUser", new SaveUserViewModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(SaveUserViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("SaveUser", vm);
+            }
+            var origin = Request.Headers["origin"];
+            RegisterResponse response = await _userService.RegisterAsync(vm, origin);
+            if (response.HasError)
+            {
+                vm.HasError = response.HasError;
+                vm.Error = response.Error;
+                return View("SaveUser", vm);
+            }
+            return RedirectToAction("AdminUser");
         }
 
         public async Task<IActionResult> LogOut()

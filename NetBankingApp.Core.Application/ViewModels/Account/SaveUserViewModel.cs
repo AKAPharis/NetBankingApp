@@ -15,6 +15,8 @@
         public string Role {  get; set; }
 
         public double InitialAmount { get; set; }
+        public bool HasError { get; set; }
+        public string? Error { get; set; }
 
     } 
 }
