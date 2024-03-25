@@ -4,7 +4,7 @@
     {
         public string IdUser { get; set; }
         public string IdBeneficiary { get; set; }
-        public int BeneficiaryAccountGuid { get; set; }
+        public string BeneficiaryAccountGuid { get; set; }
         public string NickName { get; set; }
     }
 }

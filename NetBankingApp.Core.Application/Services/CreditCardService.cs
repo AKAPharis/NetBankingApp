@@ -77,19 +77,19 @@ namespace NetBankingApp.Core.Application.Services
 
         }
 
-        public async Task<PaymentResponse> PayDebt(string creditCardGuid, double amount, string savingAccountGuid)
+        public async Task<PaymentResponse> PayDebt(AdvanceCreditViewModel vm)
         {
             PaymentResponse response = new();
-            CreditCard creditCard = await _creditCardRepository.GetByGuid(creditCardGuid);
+            CreditCard creditCard = await _creditCardRepository.GetByGuid(vm.CreditCardGuid);
             if(creditCard == null)
             {
-                response.Error = $"There is not an credit card with the guid {creditCardGuid}";
+                response.Error = $"There is not an credit card with the guid {vm.CreditCardGuid}";
                 response.HasError = true;
                 return response;
             }
-            if (creditCard.Debt - amount < 0)
-                amount = creditCard.Debt;
-            double withdrawResult = await _savingAccountService.Withdraw(savingAccountGuid, amount);
+            if (creditCard.Debt - vm.Amount < 0)
+                vm.Amount = creditCard.Debt;
+            double withdrawResult = await _savingAccountService.Withdraw(vm.SavingAccountGuid, vm.Amount);
             if (withdrawResult == 0)
             {
                 response.Error = $"There was an error withdrawing from the saving account";

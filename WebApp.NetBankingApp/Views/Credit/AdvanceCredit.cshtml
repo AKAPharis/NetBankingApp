@@ -1,0 +1,73 @@
+﻿@using NetBankingApp.Core.Application.ViewModels.CreditCard
+@using NetBankingApp.Core.Application.ViewModels.SavingAccount
+
+@model AdvanceCreditViewModel
+@{
+    ViewData["Title"] = "Advance credit";
+
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card">
+                <div class="card-header card-header-color">
+                    <h4>Advance credit</h4>
+                </div>
+                <div class="card-body">
+
+                    <form method="post" asp-controller="Credit" asp-action="AdvanceCredit">
+
+
+                        <div class="mb-3">
+                            <label asp-for="SavingAccountGuid" class="form-label">Saving Account:</label>
+                            <select asp-for="SavingAccountGuid" class="form-select">
+                                <option value="0">@(Model.SavingAccounts != null && Model.SavingAccounts.Count > 0 ? "Choose one saving account" : "There's no saving accounts, sorry")</option>
+                                @if (Model.SavingAccounts != null && Model.SavingAccounts.Count > 0)
+                                {
+
+                                    foreach (SavingAccountViewModel savingAccount in Model.SavingAccounts)
+                                    {
+                                        <option value="@savingAccount.Guid">@savingAccount.Guid</option>
+
+                                    }
+                                }
+
+                            </select>
+                            <span asp-validation-for="SavingAccountGuid" class="text-danger"></span>
+
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="CreditCardGuid" class="form-label">Credit card:</label>
+                            <select asp-for="CreditCardGuid" class="form-select">
+                                <option value="0">@(Model.CreditCards != null && Model.CreditCards.Count > 0 ? "Choose one credit card" : "There's no credit cards, sorry")</option>
+                                @if (Model.CreditCards != null && Model.CreditCards.Count > 0)
+                                {
+
+                                    foreach (CreditCardViewModel creditCard in Model.CreditCards)
+                                    {
+                                        <option value="@creditCard.Guid">@creditCard.Guid</option>
+
+                                    }
+                                }
+
+                            </select>
+                            <span asp-validation-for="SavingAccountGuid" class="text-danger"></span>
+
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Amount" class="form-label">Amount:</label>
+                            <input asp-for="Amount" class="form-control" />
+                            <span asp-validation-for="Amount" class="text-danger"></span>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <a asp-controller="Credit" asp-action="Index" class="btn btn-warning">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

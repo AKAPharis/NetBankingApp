@@ -11,7 +11,7 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
         Task<int> Total();
         Task<List<CreditCardViewModel>> GetByCustomer(string idCustomer);
 
-        Task<PaymentResponse> AdvanceCredit(string creditCardGuid, double amount, string savingAccountGuid);
+        Task<PaymentResponse> AdvanceCredit(AdvanceCreditViewModel vm);
         Task<PaymentResponse> PayDebt(string creditCardGuid, double amount, string savingAccountGuid);
     }
 }
