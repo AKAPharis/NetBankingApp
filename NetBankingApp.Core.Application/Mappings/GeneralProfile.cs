@@ -42,6 +42,8 @@ namespace NetBankingApp.Core.Application.Mappings
                 .ReverseMap();
             CreateMap<SaveBeneficiaryViewModel, Beneficiary>()
                 .ReverseMap();
+            CreateMap<BeneficiaryViewModel, Beneficiary>()
+                .ReverseMap();
 
         }
 
