@@ -14,12 +14,11 @@ namespace NetBankingApp.Infrastucture.Identity.Mappings
     {
         public GeneralProfile()
         {
-
-
             #region User
 
             CreateMap<BankingUser, UserViewModel>()
                 .ReverseMap();
+
             CreateMap<BankingUser, SaveUserViewModel>()
                 .ReverseMap();
 

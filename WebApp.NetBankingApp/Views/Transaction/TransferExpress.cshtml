@@ -1,9 +1,10 @@
 ﻿@using NetBankingApp.Core.Application.ViewModels.CreditCard
 @using NetBankingApp.Core.Application.ViewModels.SavingAccount
+@using NetBankingApp.Core.Application.ViewModels.Transaction
 
-@model AdvanceCreditViewModel
+@model TransactionExpressViewModel
 @{
-    ViewData["Title"] = "Advance credit";
+    ViewData["Title"] = "Transfer to accounts";
 
 }
 
@@ -12,7 +13,7 @@
         <div class="col-6 offset-3">
             <div class="card">
                 <div class="card-header card-header-color">
-                    <h4>Advance credit</h4>
+                    <h4>Transder to accounts</h4>
                 </div>
                 <div class="card-body">
                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -24,12 +25,12 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     }
-                    <form method="post" asp-controller="Credit" asp-action="AdvanceCredit">
+                    <form method="post" asp-controller="Transaction" asp-action="TransferExpress">
 
 
                         <div class="mb-3">
-                            <label asp-for="SavingAccountGuid" class="form-label">Saving Account:</label>
-                            <select asp-for="SavingAccountGuid" class="form-select">
+                            <label asp-for="GuidAccountOrigin" class="form-label">Origin account:</label>
+                            <select asp-for="GuidAccountOrigin" class="form-select">
                                 <option value="0">@(Model.SavingAccounts != null && Model.SavingAccounts.Count > 0 ? "Choose one saving account" : "There's no saving accounts, sorry")</option>
                                 @if (Model.SavingAccounts != null && Model.SavingAccounts.Count > 0)
                                 {
@@ -42,25 +43,14 @@
                                 }
 
                             </select>
-                            <span asp-validation-for="SavingAccountGuid" class="text-danger"></span>
+                            <span asp-validation-for="GuidAccountOrigin" class="text-danger"></span>
 
                         </div>
                         <div class="mb-3">
-                            <label asp-for="CreditCardGuid" class="form-label">Credit card:</label>
-                            <select asp-for="CreditCardGuid" class="form-select">
-                                <option value="0">@(Model.CreditCards != null && Model.CreditCards.Count > 0 ? "Choose one credit card" : "There's no credit cards, sorry")</option>
-                                @if (Model.CreditCards != null && Model.CreditCards.Count > 0)
-                                {
+                            <label asp-for="GuidAccountDestination" class="form-label">Destination account:</label>
+                            <input asp-for="GuidAccountDestination" class="form-control" />
 
-                                    foreach (CreditCardViewModel creditCard in Model.CreditCards)
-                                    {
-                                        <option value="@creditCard.Guid">@creditCard.Guid</option>
-
-                                    }
-                                }
-
-                            </select>
-                            <span asp-validation-for="SavingAccountGuid" class="text-danger"></span>
+                            <span asp-validation-for="GuidAccountDestination" class="text-danger"></span>
 
                         </div>
                         <div class="mb-3">
@@ -71,7 +61,7 @@
 
 
                         <button type="submit" class="btn btn-success">Save</button>
-                        <a asp-controller="Credit" asp-action="Index" class="btn btn-warning">Back</a>
+                        <a asp-controller="Transaction" asp-action="Index" class="btn btn-warning">Back</a>
                     </form>
                 </div>
             </div>

@@ -1,9 +1,11 @@
-﻿@using NetBankingApp.Core.Application.ViewModels.CreditCard
+﻿@using NetBankingApp.Core.Application.ViewModels.Beneficiary
+@using NetBankingApp.Core.Application.ViewModels.CreditCard
 @using NetBankingApp.Core.Application.ViewModels.SavingAccount
+@using NetBankingApp.Core.Application.ViewModels.Transaction
 
-@model AdvanceCreditViewModel
+@model TransactionBeneficiaryViewModel
 @{
-    ViewData["Title"] = "Advance credit";
+    ViewData["Title"] = "Transfer to accounts";
 
 }
 
@@ -12,7 +14,7 @@
         <div class="col-6 offset-3">
             <div class="card">
                 <div class="card-header card-header-color">
-                    <h4>Advance credit</h4>
+                    <h4>Transfer to beneficiary</h4>
                 </div>
                 <div class="card-body">
                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -24,12 +26,12 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     }
-                    <form method="post" asp-controller="Credit" asp-action="AdvanceCredit">
+                    <form method="post" asp-controller="Transaction" asp-action="TransferToBeneficiary">
 
 
                         <div class="mb-3">
-                            <label asp-for="SavingAccountGuid" class="form-label">Saving Account:</label>
-                            <select asp-for="SavingAccountGuid" class="form-select">
+                            <label asp-for="GuidAccountOrigin" class="form-label">Origin account:</label>
+                            <select asp-for="GuidAccountOrigin" class="form-select">
                                 <option value="0">@(Model.SavingAccounts != null && Model.SavingAccounts.Count > 0 ? "Choose one saving account" : "There's no saving accounts, sorry")</option>
                                 @if (Model.SavingAccounts != null && Model.SavingAccounts.Count > 0)
                                 {
@@ -42,25 +44,25 @@
                                 }
 
                             </select>
-                            <span asp-validation-for="SavingAccountGuid" class="text-danger"></span>
+                            <span asp-validation-for="GuidAccountOrigin" class="text-danger"></span>
 
                         </div>
                         <div class="mb-3">
-                            <label asp-for="CreditCardGuid" class="form-label">Credit card:</label>
-                            <select asp-for="CreditCardGuid" class="form-select">
-                                <option value="0">@(Model.CreditCards != null && Model.CreditCards.Count > 0 ? "Choose one credit card" : "There's no credit cards, sorry")</option>
-                                @if (Model.CreditCards != null && Model.CreditCards.Count > 0)
+                            <label asp-for="IdBeneficiary" class="form-label">Beneficiary:</label>
+                            <select asp-for="IdBeneficiary" class="form-select">
+                                <option value="0">@(Model.Beneficiaries != null && Model.Beneficiaries.Count > 0 ? "Choose one beneficiary" : "There's no beneficiaries, sorry")</option>
+                                @if (Model.Beneficiaries != null && Model.Beneficiaries.Count > 0)
                                 {
 
-                                    foreach (CreditCardViewModel creditCard in Model.CreditCards)
+                                    foreach (BeneficiaryViewModel beneficiary in Model.Beneficiaries)
                                     {
-                                        <option value="@creditCard.Guid">@creditCard.Guid</option>
+                                        <option value="@beneficiary.IdBeneficiary">@beneficiary.NickName</option>
 
                                     }
                                 }
 
                             </select>
-                            <span asp-validation-for="SavingAccountGuid" class="text-danger"></span>
+                            <span asp-validation-for="IdBeneficiary" class="text-danger"></span>
 
                         </div>
                         <div class="mb-3">

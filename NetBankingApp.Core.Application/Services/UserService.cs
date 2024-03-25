@@ -75,6 +75,10 @@ namespace NetBankingApp.Core.Application.Services
             }
             return result;
         }
+        public async Task<List<UserViewModel>> GetAll()
+        {
+            return await _accountService.GetAll();
+        }
 
         public async Task<UserViewModel> GetByIdAsync(string id)
         {

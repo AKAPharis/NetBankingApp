@@ -1,9 +1,10 @@
 ﻿@using NetBankingApp.Core.Application.ViewModels.CreditCard
+@using NetBankingApp.Core.Application.ViewModels.Payment
 @using NetBankingApp.Core.Application.ViewModels.SavingAccount
 
-@model AdvanceCreditViewModel
+@model CreditPaymentViewModel
 @{
-    ViewData["Title"] = "Advance credit";
+    ViewData["Title"] = "Credit payment";
 
 }
 
@@ -12,7 +13,7 @@
         <div class="col-6 offset-3">
             <div class="card">
                 <div class="card-header card-header-color">
-                    <h4>Advance credit</h4>
+                    <h4>Credit payment</h4>
                 </div>
                 <div class="card-body">
                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -24,7 +25,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     }
-                    <form method="post" asp-controller="Credit" asp-action="AdvanceCredit">
+                    <form method="post" asp-controller="Pay" asp-action="CreditPayment">
 
 
                         <div class="mb-3">
@@ -71,7 +72,7 @@
 
 
                         <button type="submit" class="btn btn-success">Save</button>
-                        <a asp-controller="Credit" asp-action="Index" class="btn btn-warning">Back</a>
+                        <a asp-controller="Pay" asp-action="Index" class="btn btn-warning">Back</a>
                     </form>
                 </div>
             </div>

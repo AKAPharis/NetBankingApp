@@ -66,7 +66,26 @@ namespace NetBankingApp.Infrastucture.Identity.Services
             var users = await _userManager.Users.Where(x => !x.IsActived).ToArrayAsync();
             return users.Count();
         }
+        public async Task<List<UserViewModel>> GetAll()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var usersVm = _mapper.Map<List<UserViewModel>>(users);
+            if (users != null && users.Count > 0)
+            {
+                foreach(UserViewModel user in usersVm)
+                {
+                    var roles = await _userManager.GetRolesAsync(users.FirstOrDefault(y => y.Id == user.Id));
+                    user.Roles = roles.ToList();
+                }
 
+                //usersVm.ForEach(async x =>
+                //{
+                //    var roles = await _userManager.GetRolesAsync(users.FirstOrDefault(y => y.Id == x.Id));
+                //    x.Roles = roles.ToList();
+                //});
+            }
+            return usersVm;
+        }
 
         public async Task<AuthenticationResponse> AuthenticateAsync(AuthenticationRequest request)
         {
