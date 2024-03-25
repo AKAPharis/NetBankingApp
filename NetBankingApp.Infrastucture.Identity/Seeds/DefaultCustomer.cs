@@ -27,6 +27,25 @@ namespace NetBankingApp.Infrastucture.Identity.Seeds
                     await userManager.AddToRoleAsync(defaultUser, Roles.Customer.ToString());
                 }
             }
+            BankingUser defaultUser2 = new();
+            defaultUser2.UserName = "defaultCustomer2";
+            defaultUser2.Email = "defaultcustomer2@gmail.com";
+            defaultUser2.FirstName = "Default";
+            defaultUser2.LastName = "Customer";
+            defaultUser2.DocumentId = "001-0250013-4";
+            defaultUser2.EmailConfirmed = true;
+            defaultUser2.PhoneNumberConfirmed = true;
+            defaultUser2.IsActived = true;
+
+            if (userManager.Users.All(u => u.Id != defaultUser2.Id))
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser2.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser2, "123Pa$$word!");
+                    await userManager.AddToRoleAsync(defaultUser2, Roles.Customer.ToString());
+                }
+            }
 
         }
     }
