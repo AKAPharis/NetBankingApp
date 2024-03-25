@@ -63,8 +63,6 @@ namespace NetBankingApp.Core.Application.Services
             await _accountService.SignOutAsync();
         }
 
-
-
         public async Task<EditResponse> EditAsync(SaveUserViewModel vm, string origin)
         {
             var result = await _accountService.EditUserAsync(_mapper.Map<EditRequest>(vm), origin);
