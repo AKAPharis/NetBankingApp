@@ -11,16 +11,21 @@ namespace NetBankingApp.Core.Application.Services
         private readonly IBeneficiaryRepository _beneficiaryRepository;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly ISavingAccountService _savingAccountService;
 
-        public BeneficiaryService(IBeneficiaryRepository beneficiaryRepository, IUserService userService, IMapper mapper)
+        public BeneficiaryService(IBeneficiaryRepository beneficiaryRepository, IUserService userService, IMapper mapper, ISavingAccountService savingAccountService)
         {
             _beneficiaryRepository = beneficiaryRepository;
             _userService = userService;
             _mapper = mapper;
+            _savingAccountService = savingAccountService;
         }
 
         public async Task<SaveBeneficiaryViewModel> CreateBeneficiary(SaveBeneficiaryViewModel vm)
         {
+            var account = await _savingAccountService.GetByGuid(vm.BeneficiaryAccountGuid);
+            var beneficiary = await _userService.GetByIdAsync(account.IdCustomer);
+            vm.IdBeneficiary = beneficiary.Id;
             return _mapper.Map<SaveBeneficiaryViewModel>(await _beneficiaryRepository.CreateAsync(_mapper.Map<Beneficiary>(vm)));
         }
 
@@ -42,6 +47,10 @@ namespace NetBankingApp.Core.Application.Services
         public async Task<BeneficiaryViewModel> GetBeneficiary(string idUser, string idBeneficiary)
         {
             return _mapper.Map<BeneficiaryViewModel>(await _beneficiaryRepository.GetBeneficiary(idUser,idBeneficiary));
+        }
+        public async Task<SaveBeneficiaryViewModel> GetBeneficiarySaveViewModel(string idUser, string idBeneficiary)
+        {
+            return _mapper.Map<SaveBeneficiaryViewModel>(await _beneficiaryRepository.GetBeneficiary(idUser, idBeneficiary));
         }
     }
 }
