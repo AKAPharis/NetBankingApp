@@ -59,7 +59,9 @@ body {
         transform: rotate(90deg);
     }
 
-
+.darkBlueGreen {
+    color: #1B998B;
+}
 
 /* Login page style */
 
