@@ -68,7 +68,18 @@ namespace NetBankingApp.Infrastucture.Identity.Services
         }
         public async Task<List<UserViewModel>> GetAll()
         {
-            return _mapper.Map<List<UserViewModel>>(await _userManager.Users.ToListAsync());
+            var users = await _userManager.Users.ToListAsync();
+            var usersVm = _mapper.Map<List<UserViewModel>>(users);
+            if (users != null && users.Count > 0)
+            {
+
+                usersVm.ForEach(async x =>
+                {
+                    var roles = await _userManager.GetRolesAsync(users.FirstOrDefault(y => y.Id == x.Id));
+                    x.Roles = roles.ToList();
+                });
+            }
+            return usersVm;
         }
 
         public async Task<AuthenticationResponse> AuthenticateAsync(AuthenticationRequest request)
