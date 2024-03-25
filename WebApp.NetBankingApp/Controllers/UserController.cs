@@ -54,6 +54,13 @@ namespace WebApp.NetBankingApp.Controllers
             }
         }
 
+        public async Task<IActionResult> DeactivateUser( string Id)
+        {
+            await _userService.ActivateUser(Id);
+            return View("AdminUser");
+        }
+
+
         public IActionResult AdminUser()
         {
             return View();

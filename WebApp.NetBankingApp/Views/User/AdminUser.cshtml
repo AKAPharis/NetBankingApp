@@ -37,7 +37,7 @@
                         <td>darianacabreja@gmail.com</td>
                         <td>Admin</td>
                         <td>
-                            <a href="#">
+                            <a data-bs-toggle="modal" data-bs-target="#InactiveUser">
                                 <span class="badge bg-info-subtle text-info-emphasis rounded-pill">Active</span>
                             </a>
                         </td>
@@ -134,10 +134,26 @@
                                 </div>
                             </td>
                         </tr>
-
+                        <!-- Modal - Activation User -->
+                        <div class="modal fade p-4 py-md-5" tabindex="-1" role="dialog" id="InactiveUser" data-bs-backdrop="static">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content rounded-3 shadow">
+                                    <div class="modal-body p-4 text-center">
+                                        <h5 class="mb-3 fw-bold">Activate this user?</h5>
+                                        <p class="mb-0">You can always change your mind and go back.</p>
+                                    </div>
+                                    <div class="modal-footer flex-nowrap p-0">
+                                        <a class="btn btn-lg btn-link hightlightedBTN fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" asp-action="DeactivateUser" asp-controller="User" asp-route-Id="@user.Id"><strong>Yes, enable</strong></a>
+                                        <button type="button" class="btn btn-lg btn-link hightlightedBTN fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" data-bs-dismiss="modal">No thanks</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     }
                 </tbody>
             </table>
+
+            
         </div>
     </div>
 </div>
