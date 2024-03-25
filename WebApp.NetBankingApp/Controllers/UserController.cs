@@ -59,7 +59,7 @@ namespace WebApp.NetBankingApp.Controllers
             await _userService.ActivateUser(Id);
             return View("AdminUser");
         }
-        public IActionResult AdminUser()
+        public async Task<IActionResult> AdminUser()
         {
             return View(await _userService.GetAll());
         }
