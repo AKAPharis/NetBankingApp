@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NetBankingApp.Core.Application.Dtos.Account;
 using NetBankingApp.Core.Application.Interfaces.Services;
-using System.Diagnostics;
-using WebApp.NetBankingApp.Models;
+using NetBankingApp.Core.Application.ViewModels.Home;
+using NetBankingApp.Core.Application.Helpers;
 
 namespace WebApp.NetBankingApp.Controllers
 {
@@ -11,11 +12,18 @@ namespace WebApp.NetBankingApp.Controllers
     {
         private readonly ILogger<HomeController> _logger; 
         private readonly ILogService _logService;
+        private readonly ICreditCardService _creditCardService;
+        private readonly ISavingAccountService _savingAccountService;
+        private readonly ILoanService _loanService;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public HomeController(ILogger<HomeController> logger, ILogService logService)
+        public HomeController(ILogger<HomeController> logger, ILogService logService, ISavingAccountService savingAccountService, ICreditCardService creditCardService, ILoanService loanService, IHttpContextAccessor contextAccessor)
         {
             _logService = logService;
             _logger = logger;
+            _creditCardService = creditCardService;
+            _savingAccountService = savingAccountService;
+            _loanService = loanService;
         }
 
         public async Task<IActionResult> Index()
@@ -23,9 +31,16 @@ namespace WebApp.NetBankingApp.Controllers
             return View(await _logService.GetLogs());
         }
 
-        public IActionResult CustomerHome()
+        public async Task<IActionResult> CustomerHome()
         {
-            return View();
+
+            string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
+            CustomerHomeViewModel home = new();
+            home.Loans = await _loanService.GetByCustomer(idCustomer);
+            home.CreditCards = await _creditCardService.GetByCustomer(idCustomer);
+            home.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
+
+            return View(home);
         }
     }
 }

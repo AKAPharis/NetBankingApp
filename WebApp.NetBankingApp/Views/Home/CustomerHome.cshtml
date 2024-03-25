@@ -1,4 +1,9 @@
-﻿@{
+﻿@using NetBankingApp.Core.Application.ViewModels.Home;
+@using NetBankingApp.Core.Application.ViewModels.CreditCard;
+@using NetBankingApp.Core.Application.ViewModels.Loan;
+@using NetBankingApp.Core.Application.ViewModels.SavingAccount;
+@model CustomerHomeViewModel;
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,6 +11,7 @@
     <div class="row">
         <h2 class="text-dark p-0 mb-4">Accounts</h2>
         <div class="table-responsive py-4 px-5 bg-white rounded-4">
+
             <table class="table border-opacity-10 darkBlueGreen">
                 <thead>
                     <tr>
@@ -52,6 +58,15 @@
                     </tr>
                 </tbody>
             </table>
+
+            @if (Model.Loans != null)
+            {
+                @foreach (LoanViewModel loan in Model.Loans)
+                {
+                    <p> @loan.LoanAmount</p>
+                }
+            }
+
         </div>
     </div>
 </div>
