@@ -54,6 +54,16 @@ namespace WebApp.NetBankingApp.Controllers
             }
         }
 
+        public IActionResult AdminUser()
+        {
+            return View();
+        }
+
+        public IActionResult Create()
+        {
+            return View("SaveUser");
+        }
+
         public async Task<IActionResult> LogOut()
         {
             await _userService.SignOutAsync();
