@@ -2,8 +2,8 @@
 {
     public class SaveBeneficiaryViewModel
     {
-        public string IdUser { get; set; }
-        public string IdBeneficiary { get; set; }
+        public string? IdUser { get; set; }
+        public string? IdBeneficiary { get; set; }
         public string BeneficiaryAccountGuid { get; set; }
         public string NickName { get; set; }
     }

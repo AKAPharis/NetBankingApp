@@ -17,7 +17,7 @@ namespace NetBankingApp.Core.Application.ViewModels.CreditCard
         [Required]
         public string SavingAccountGuid { get; set; }
 
-        public string? Erorr {  get; set; }
+        public string? Error {  get; set; }
         public bool HasError { get; set; }
         public List<SavingAccountViewModel>? SavingAccounts { get; set; }
         public List<CreditCardViewModel>? CreditCards { get; set; }
