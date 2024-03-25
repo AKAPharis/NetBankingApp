@@ -12,9 +12,9 @@ namespace WebApp.NetBankingApp.Controllers
     public class BeneficiaryController : Controller
     {
         private readonly IBeneficiaryService _beneficiaryService;
-        private readonly HttpContextAccessor _contextAccessor;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public BeneficiaryController(IBeneficiaryService beneficiaryService, HttpContextAccessor contextAccessor)
+        public BeneficiaryController(IBeneficiaryService beneficiaryService, IHttpContextAccessor contextAccessor)
         {
             _beneficiaryService = beneficiaryService;
             _contextAccessor = contextAccessor;

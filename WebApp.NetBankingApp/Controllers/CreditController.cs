@@ -14,9 +14,9 @@ namespace WebApp.NetBankingApp.Controllers
     {
         private readonly ICreditCardService _creditCardService;
         private readonly ISavingAccountService _savingAccountService;
-        private readonly HttpContextAccessor _contextAccessor;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public CreditController(ICreditCardService creditCardService, ISavingAccountService savingAccountService, HttpContextAccessor contextAccessor)
+        public CreditController(ICreditCardService creditCardService, ISavingAccountService savingAccountService, IHttpContextAccessor contextAccessor)
         {
             _creditCardService = creditCardService;
             _savingAccountService = savingAccountService;
@@ -35,15 +35,21 @@ namespace WebApp.NetBankingApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AdvanceCredit(AdvanceCreditViewModel vm)
         {
+            string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                vm.CreditCards = await _creditCardService.GetByCustomer(idCustomer);
+                vm.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
                 return View(vm);
             }
             var response = await _creditCardService.AdvanceCredit(vm);
             if (response.HasError)
             {
-                vm.Erorr = response.Error;
+
+                vm.CreditCards = await _creditCardService.GetByCustomer(idCustomer);
+                vm.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
+                vm.Error = response.Error;
                 vm.HasError = response.HasError;
                 return View(vm);
 

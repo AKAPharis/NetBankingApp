@@ -16,8 +16,16 @@
                     <h4>Transder to accounts</h4>
                 </div>
                 <div class="card-body">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-                    <form method="post" asp-controller="Credit" asp-action="AdvanceCredit">
+                    @if (Model.HasError)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <p>@Model.Error</p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+                    <form method="post" asp-controller="Transaction" asp-action="TransferToAccount">
 
 
                         <div class="mb-3">

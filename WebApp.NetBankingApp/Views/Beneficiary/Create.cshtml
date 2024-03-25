@@ -17,6 +17,11 @@
                             <input asp-for="BeneficiaryAccountGuid" class="form-control" />
                             <span asp-validation-for="BeneficiaryAccountGuid" class="text-danger"></span>
                         </div>
+                        <div class="mb-3">
+                            <label asp-for="NickName" class="form-label">NickName:</label>
+                            <input asp-for="NickName" class="form-control" />
+                            <span asp-validation-for="NickName" class="text-danger"></span>
+                        </div>
 
                         <button type="submit" class="btn btn-success">Save</button>
                         <a asp-controller="Beneficiary" asp-action="Index" class="btn btn-warning">Back</a>

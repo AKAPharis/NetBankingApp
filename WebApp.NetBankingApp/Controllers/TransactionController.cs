@@ -31,14 +31,17 @@ namespace WebApp.NetBankingApp.Controllers
         {
             string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
             TransactionToAccountViewModel vm = new();
-            vm.SavingAccounts = await _savingAccountService.GetByCustomer("");
-            return View();
+            vm.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
+            return View(vm);
         }
         [HttpPost]
         public async Task<IActionResult> TransferToAccount(TransactionToAccountViewModel vm)
         {
+            string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
+
             if (!ModelState.IsValid)
             {
+                vm.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
                 return View(vm);
             }
             var response = await _transactionService.TransactionToAccount(vm);
