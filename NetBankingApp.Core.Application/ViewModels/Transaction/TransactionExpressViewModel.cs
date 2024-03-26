@@ -13,6 +13,8 @@ namespace NetBankingApp.Core.Application.ViewModels.Transaction
         public string GuidAccountDestination { get; set; }
         public double Amount { get; set; }
         public List<SavingAccountViewModel>? SavingAccounts { get; set; }
+        public string? DestinationOwnerFirsName { get; set; }
+        public string? DestinationOwnerLastName { get; set; }
 
         public string? Error { get; set; }
         public bool HasError { get; set; }
