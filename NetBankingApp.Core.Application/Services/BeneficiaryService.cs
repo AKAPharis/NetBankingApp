@@ -55,10 +55,10 @@ namespace NetBankingApp.Core.Application.Services
         public async Task<List<BeneficiaryViewModel>> GetBenficiaries(string idUser)
         {
             var beneficiaries = _mapper.Map<List<BeneficiaryViewModel>>(await _beneficiaryRepository.GetBeneficiaries(idUser));
-            beneficiaries.ForEach(async beneficiary => {
-                var user = await _userService.GetByIdAsync(beneficiary.IdBeneficiary);
-                beneficiary.BeneficiaryLastName = user.LastName;
-                beneficiary.BeneficiaryFirstName = user.FirstName;
+            beneficiaries.ForEach( beneficiary => {
+                var user =  _userService.GetByIdAsync(beneficiary.IdBeneficiary);
+                beneficiary.BeneficiaryLastName = user.Result.LastName;
+                beneficiary.BeneficiaryFirstName = user.Result.FirstName;
                 });
             return beneficiaries;
         }
