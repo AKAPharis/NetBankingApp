@@ -8,5 +8,7 @@ namespace NetBankingApp.Core.Application.Interfaces.Services
         Task<TransactionResponse> TransactionBeneficiary(TransactionBeneficiaryViewModel vm);
         Task<TransactionResponse> TransactionExpress(TransactionExpressViewModel vm);
         Task<TransactionResponse> TransactionToAccount(TransactionToAccountViewModel vm);
+        Task<TransactionResponse> TransactionBeneficiaryValidation(TransactionBeneficiaryViewModel vm);
+        Task<TransactionResponse> TransactionExpressValidation(TransactionExpressViewModel vm);
     }
 }
