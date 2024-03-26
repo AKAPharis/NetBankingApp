@@ -80,6 +80,7 @@ namespace NetBankingApp.Core.Application.Services
                 account = await _loanRepository.GetByIdAsync(int.Parse(viewModel.Guid));
 
             } while (account != null);
+            viewModel.Debt = viewModel.LoanAmount;
             var result = await base.CreateAsync(viewModel);
             if(result != null)
             {
