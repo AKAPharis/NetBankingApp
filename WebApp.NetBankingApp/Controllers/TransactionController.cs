@@ -25,11 +25,6 @@ namespace WebApp.NetBankingApp.Controllers
             _contextAccessor = contextAccessor;
         }
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public async Task<IActionResult> TransferToAccount()
         {
             string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
@@ -37,6 +32,7 @@ namespace WebApp.NetBankingApp.Controllers
             vm.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
             return View(vm);
         }
+
         [HttpPost]
         public async Task<IActionResult> TransferToAccount(TransactionToAccountViewModel vm)
         {
@@ -55,7 +51,7 @@ namespace WebApp.NetBankingApp.Controllers
                 vm.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
                 return View(vm);    
             }
-            return RedirectToRoute(new { controller = "Transaction", action = "Index" });
+            return RedirectToRoute(new { controller = "Home", action = "CustomerHome" });
         }
         public async Task<IActionResult> TransferExpress()
         {
@@ -82,7 +78,7 @@ namespace WebApp.NetBankingApp.Controllers
                 vm.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
                 return View(vm);
             }
-            return RedirectToRoute(new { controller = "Transaction", action = "Index" });
+            return RedirectToRoute(new { controller = "Home", action = "CustomerHome" });
         }
         public async Task<IActionResult> TransferToBeneficiary()
         {
@@ -112,7 +108,7 @@ namespace WebApp.NetBankingApp.Controllers
                 vm.Beneficiaries = await _beneficiaryService.GetBenficiaries(idCustomer);
                 return View(vm);
             }
-            return RedirectToRoute(new { controller = "Transaction", action = "Index" });
+            return RedirectToRoute(new { controller = "Home", action = "CustomerHome" });
         }
     }
 }

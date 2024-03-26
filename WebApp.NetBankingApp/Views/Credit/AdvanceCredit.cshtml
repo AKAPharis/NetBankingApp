@@ -37,7 +37,6 @@
                                     foreach (SavingAccountViewModel savingAccount in Model.SavingAccounts)
                                     {
                                         <option value="@savingAccount.Guid">@savingAccount.Guid</option>
-
                                     }
                                 }
 
@@ -51,11 +50,9 @@
                                 <option value="0">@(Model.CreditCards != null && Model.CreditCards.Count > 0 ? "Choose one credit card" : "There's no credit cards, sorry")</option>
                                 @if (Model.CreditCards != null && Model.CreditCards.Count > 0)
                                 {
-
                                     foreach (CreditCardViewModel creditCard in Model.CreditCards)
                                     {
                                         <option value="@creditCard.Guid">@creditCard.Guid</option>
-
                                     }
                                 }
 

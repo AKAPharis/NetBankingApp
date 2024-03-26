@@ -11,7 +11,7 @@
 <div class="container normalText p-4 px-5">
 
     <h3>Savings accounts</h3>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mt-1 mb-5">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 mt-1 mb-5">
 
         @if (Model.SavingAccounts != null)
         {
@@ -48,7 +48,7 @@
     </div>
 
     <h3>Credit cards</h3>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mt-1 mb-5">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 mt-1 mb-5">
 
         @if (Model.CreditCards != null)
         {
@@ -78,7 +78,7 @@
     </div>
 
     <h3>Loans</h3>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mt-1">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 mt-1">
         @if (Model.Loans != null)
         {
             @foreach (LoanViewModel loan in Model.Loans)

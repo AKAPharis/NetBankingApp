@@ -1,9 +1,7 @@
 ﻿@using NetBankingApp.Core.Application.ViewModels.Beneficiary
 @model SaveBeneficiaryViewModel
-@{
-}
 
-<div class="container-fluid">
+@* <div class="container-fluid">
     <div class="row">
         <div class="col-6 offset-3">
             <div class="card">
@@ -36,6 +34,57 @@
                         <a asp-controller="Beneficiary" asp-action="Index" class="btn btn-warning">Back</a>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+</div> *@
+
+<div class="container normalText p-4 px-5">
+    <div class="row">
+        <h2 class="text-dark p-0 mb-4 text-center">Creating a new beneficiary</h2>
+
+        <div class="d-flex justify-content-center">
+            <div class="py-5 px-5 bg-white rounded-4 col-6">
+
+                <form method="post" asp-controller="Beneficiary" asp-action="Create">
+                    <div class="d-flex justify-content-center">
+                        <div class="col-8">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                            @if (Model.HasError)
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <p>@Model.Error</p>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
+
+                            <div class="mb-3">
+                                <label asp-for="BeneficiaryAccountGuid" class="form-label">Beneficiary account guid:</label>
+                                <input asp-for="BeneficiaryAccountGuid" class="form-control" />
+                                <span asp-validation-for="BeneficiaryAccountGuid" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="NickName" class="form-label">NickName:</label>
+                                <input asp-for="NickName" class="form-control" />
+                                <span asp-validation-for="NickName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <div class="col-8 d-flex gap-2">
+                            <div class="col-auto">
+                                <a asp-controller="Beneficiary" asp-action="Index" class="btn btn-outline-secondary w-100">Back</a>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-info w-100">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>

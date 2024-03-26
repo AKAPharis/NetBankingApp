@@ -17,11 +17,6 @@ namespace WebApp.NetBankingApp.Controllers
             _savingAccountService = savingAccountService;
         }
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public IActionResult AddSavingAccount(string id)
         {
             return View(new SaveSavingAccountViewModel { IdCustomer = id });

@@ -56,7 +56,7 @@ namespace WebApp.NetBankingApp.Controllers
                 return View(vm);
 
             }
-            return RedirectToRoute(new { controller = "Credit", action = "Index" });
+            return RedirectToRoute(new { controller = "Home", action = "CustomerHome" });
         }
 
         public IActionResult AddCreditCard(string id)

@@ -16,11 +16,6 @@ namespace WebApp.NetBankingApp.Controllers
             _loanService = loanService;
         }
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public IActionResult AddLoan(string id)
         {
             return View(new SaveLoanViewModel { IdCustomer = id});

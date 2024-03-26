@@ -40,7 +40,6 @@ namespace WebApp.NetBankingApp.Controllers
 
         public IActionResult Create()
         {
-
             return View(new SaveBeneficiaryViewModel());
         }
 
