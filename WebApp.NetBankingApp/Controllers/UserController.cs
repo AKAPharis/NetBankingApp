@@ -7,6 +7,7 @@ using NetBankingApp.Core.Application.Helpers;
 using NetBankingApp.Infrastucture.Identity.Seeds;
 using Microsoft.AspNetCore.Authorization;
 using NetBankingApp.Core.Application.Enums;
+using NetBankingApp.Core.Application.ViewModels.Home;
 
 namespace WebApp.NetBankingApp.Controllers
 {
@@ -14,10 +15,18 @@ namespace WebApp.NetBankingApp.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly ICreditCardService _creditCardService;
+        private readonly ISavingAccountService _savingAccountService;
+        private readonly ILoanService _loanService;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, ICreditCardService creditCardService, ISavingAccountService savingAccountService, ILoanService loanService, IHttpContextAccessor contextAccessor)
         {
             _userService = userService;
+            _creditCardService = creditCardService;
+            _savingAccountService = savingAccountService;
+            _loanService = loanService;
+            _contextAccessor = contextAccessor;
         }
 
         public IActionResult Index()
@@ -70,6 +79,17 @@ namespace WebApp.NetBankingApp.Controllers
         public async Task<IActionResult> AdminUser()
         {
             return View(await _userService.GetAll());
+        }
+
+        public async Task<IActionResult> UserProducts(string Id)
+        {
+            CustomerHomeViewModel home = new();
+            home.IdCustomer = Id;
+            home.Loans = await _loanService.GetByCustomer(Id);
+            home.CreditCards = await _creditCardService.GetByCustomer(Id);
+            home.SavingAccounts = await _savingAccountService.GetByCustomer(Id);
+
+            return View(home);
         }
 
         public IActionResult Create()

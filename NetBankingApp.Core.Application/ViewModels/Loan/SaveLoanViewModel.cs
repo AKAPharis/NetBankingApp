@@ -2,7 +2,7 @@
 {
     public class SaveLoanViewModel
     {
-        public int Id { get; set; }
+        //public int? Id { get; set; }
         public string? Guid { get; set; }
         public double LoanAmount { get; set; }
 

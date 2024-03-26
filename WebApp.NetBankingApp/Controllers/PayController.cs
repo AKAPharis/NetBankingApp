@@ -36,6 +36,7 @@ namespace WebApp.NetBankingApp.Controllers
             vm.Loans = await _loanService.GetByCustomer(idCustomer);
             return View(vm);
         }
+
         [HttpPost]
         public async Task<IActionResult> LoanPayment(LoanPaymentViewModel vm)
         {
@@ -57,6 +58,7 @@ namespace WebApp.NetBankingApp.Controllers
             }
             return View(vm);
         }
+
         public async Task<IActionResult> CreditPayment()
         {
             string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
@@ -66,6 +68,7 @@ namespace WebApp.NetBankingApp.Controllers
             vm.CreditCards = await _creditCardService.GetByCustomer(idCustomer);
             return View(vm);
         }
+
         [HttpPost]
         public async Task<IActionResult> CreditPayment(CreditPaymentViewModel vm)
         {

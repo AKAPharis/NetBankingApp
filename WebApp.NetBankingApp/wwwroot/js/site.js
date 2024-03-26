@@ -10,15 +10,14 @@ function toggleDivVisibility() {
     // Obtener el valor seleccionado del select
     var selectValue = document.getElementById("roles").value;
 
+    // Obtener el div que se va a mostrar u ocultar
     var div = document.getElementById("addFieldCustomer");
 
     // Mostrar u ocultar el div según el valor seleccionado
-    if (selectValue === "show") {
-        div.classList.remove("hiddenDiv");
-        div.classList.add("shownDiv");
+    if (selectValue === "Customer") {
+        div.style.display = "block";
     } else {
-        div.classList.remove("shownDiv");
-        div.classList.add("hiddenDiv");
+        div.style.display = "none";
     }
 }
 

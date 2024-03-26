@@ -9,17 +9,20 @@
         <h2 class="text-dark p-0 mb-4 text-center">Add loan account</h2>
         <div class="d-flex justify-content-center">
             <div class="py-5 px-5 bg-white rounded-4 col-6">
-                <form method="post" enctype="multipart/form-data" asp-controller="User" asp-action="Register">
+                <form method="post" asp-controller="Loan" asp-action="AddLoan">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
                     <div class="mb-4 d-flex justify-content-center">
                         <div class="col-8">
                             <div class="">
                                 <label asp-for="LoanAmount" class="form-label fw-bold">Amount</label>
                                 <input asp-for="LoanAmount" class="form-control inputCustomize">
                                 <span asp-validation-for="LoanAmount" class="text-danger"></span>
+                                <input type="hidden" asp-for="IdCustomer" />
+                                @* <input type="hidden" asp-for="Id" /> *@
                             </div>
                         </div>
                     </div>
-
                     <div class="d-flex justify-content-center">
                         <div class="col-8">
                             <button type="submit" class="btn btn-info w-100 fw-bold">Add</button>
