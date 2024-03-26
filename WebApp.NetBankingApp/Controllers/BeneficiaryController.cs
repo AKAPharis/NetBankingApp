@@ -41,7 +41,7 @@ namespace WebApp.NetBankingApp.Controllers
         public IActionResult Create()
         {
 
-            return View();
+            return View(new SaveBeneficiaryViewModel());
         }
 
         [HttpPost]
@@ -54,9 +54,9 @@ namespace WebApp.NetBankingApp.Controllers
             string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
             vm.IdUser = idCustomer;
             var response = await _beneficiaryService.CreateBeneficiary(vm);
-            if(response == null)
+            if(response.HasError)
             {
-                return View(vm);
+                return View(response);
             }
 
             return RedirectToRoute(new { controller = "Beneficiary", action = "Index" });

@@ -11,7 +11,16 @@
                     <h4>Creating a new beneficiary</h4>
                 </div>
                 <div class="card-body card-body-color">
-                    <form method="post" asp-controller="Beneficiary" asp-action="Create" >
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                    @if (Model.HasError)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <p>@Model.Error</p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+                    <form method="post" asp-controller="Beneficiary" asp-action="Create">
                         <div class="mb-3">
                             <label asp-for="BeneficiaryAccountGuid" class="form-label">Beneficiary account guid:</label>
                             <input asp-for="BeneficiaryAccountGuid" class="form-control" />
