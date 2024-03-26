@@ -34,27 +34,54 @@ namespace NetBankingApp.Infrastucture.Identity.Services
 
         public async Task<UserViewModel> GetByIdAsync(string id)
         {
-            return _mapper.Map<UserViewModel>(await _userManager.FindByIdAsync(id));
+            var user = await _userManager.FindByIdAsync(id);
+            var userVm = _mapper.Map<UserViewModel>(user);
+            if (user != null)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                userVm.Roles = roles.ToList();
+            }
+            return userVm;
         }
         public async Task DeactivateUser(string id)
         {
             BankingUser user = await _userManager.FindByIdAsync(id);
-            user.IsActived = false;
-            await _userManager.UpdateAsync(user);
+            if (user != null)
+            {
+                user.IsActived = false;
+                await _userManager.UpdateAsync(user);
+            }
         }
         public async Task ActivateUser(string id)
         {
             BankingUser user = await _userManager.FindByIdAsync(id);
-            user.IsActived = true;
-            await _userManager.UpdateAsync(user);
+            if (user != null)
+            {
+                user.IsActived = true;
+                await _userManager.UpdateAsync(user);
+            }
         }
         public async Task<UserViewModel> GetByUsernameAsync(string username)
         {
-            return _mapper.Map<UserViewModel>(await _userManager.FindByNameAsync(username));
+            var user = await _userManager.FindByNameAsync(username);
+            var userVm = _mapper.Map<UserViewModel>(user);
+            if (user != null)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                userVm.Roles = roles.ToList();
+            }
+            return userVm;
         }
         public async Task<SaveUserViewModel> GetByIdSaveViewModelAsync(string id)
         {
-            return _mapper.Map<SaveUserViewModel>(await _userManager.FindByIdAsync(id));
+            var user = await _userManager.FindByIdAsync(id);
+            var userVm = _mapper.Map<SaveUserViewModel>(user);
+            if (user != null)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                userVm.Role = roles.FirstOrDefault(x => x == Roles.Customer.ToString() || x == Roles.Admin.ToString());
+            }
+            return userVm;
         }
         public async Task<int> GetActiveUsers()
         {
@@ -72,7 +99,7 @@ namespace NetBankingApp.Infrastucture.Identity.Services
             var usersVm = _mapper.Map<List<UserViewModel>>(users);
             if (users != null && users.Count > 0)
             {
-                foreach(UserViewModel user in usersVm)
+                foreach (UserViewModel user in usersVm)
                 {
                     var roles = await _userManager.GetRolesAsync(users.FirstOrDefault(y => y.Id == user.Id));
                     user.Roles = roles.ToList();
