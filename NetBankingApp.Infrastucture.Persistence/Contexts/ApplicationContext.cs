@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetBankingApp.Core.Domain.Common;
 using NetBankingApp.Core.Domain.Models;
 
 namespace NetBankingApp.Infrastucture.Persistence.Contexts
@@ -48,6 +49,22 @@ namespace NetBankingApp.Infrastucture.Persistence.Contexts
 
         }
 
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
 
+
+            foreach (var entry in ChangeTracker.Entries<BaseEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.Created = DateTime.Now;
+                        break;
+
+                }
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
+        }
     }
 }

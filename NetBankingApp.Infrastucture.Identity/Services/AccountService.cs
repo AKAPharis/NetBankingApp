@@ -139,7 +139,12 @@ namespace NetBankingApp.Infrastucture.Identity.Services
                 response.Error = $"Account no confirmed for {request.Username}";
                 return response;
             }
-
+            if (!user.IsActived)
+            {
+                response.HasError = true;
+                response.Error = $"Account no actived for {request.Username}";
+                return response;
+            }
 
             response.Id = user.Id;
             response.Email = user.Email;
