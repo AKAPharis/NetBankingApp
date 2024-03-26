@@ -54,19 +54,19 @@
                             @if (Model.HasError)
                             {
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <p>@Model.Error</p>
+                                    <p class="mb-0">@Model.Error</p>
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             }
 
                             <div class="mb-3">
-                                <label asp-for="BeneficiaryAccountGuid" class="form-label">Beneficiary account guid:</label>
+                                <label asp-for="BeneficiaryAccountGuid" class="form-label fw-bold">Beneficiary account guid</label>
                                 <input asp-for="BeneficiaryAccountGuid" class="form-control" />
                                 <span asp-validation-for="BeneficiaryAccountGuid" class="text-danger"></span>
                             </div>
 
                             <div class="mb-3">
-                                <label asp-for="NickName" class="form-label">NickName:</label>
+                                <label asp-for="NickName" class="form-label fw-bold">Nickname</label>
                                 <input asp-for="NickName" class="form-control" />
                                 <span asp-validation-for="NickName" class="text-danger"></span>
                             </div>

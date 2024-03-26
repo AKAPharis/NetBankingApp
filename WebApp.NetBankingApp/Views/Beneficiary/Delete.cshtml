@@ -1,28 +1,28 @@
 ﻿@using NetBankingApp.Core.Application.ViewModels.Beneficiary
 @model SaveBeneficiaryViewModel
 @{
+    ViewData["Tittle"] = "Delete";
 }
 
-<div class="container-fluid">
-
+<div class="container normalText p-4 px-5">
     <div class="row">
-        <div class="col-6 offset-3">
-            <div class="card">
-                <div class="card-header card-header-color">
-                    <h4>Are you sure you want delete the beneficiary @Model.NickName?</h4>
-                </div>
-                <div class="card-body card-body-color">
-                    <form method="post" asp-controller="Beneficiary" asp-action="Delete">
-
-
-
-                        <input type="hidden" asp-for="IdBeneficiary" />
-                        <input type="hidden" asp-for="IdUser" />
-
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                        <a asp-controller="Beneficiary" asp-action="Index" class="btn btn-warning">Back</a>
-                    </form>
-                </div>
+        <div class="d-flex justify-content-center">
+                <div class="modal modal-sheet position-static d-block p-4 py-md-5" tabindex="-1" role="dialog" id="modalChoice">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content rounded-3 shadow">
+                            <div class="modal-body p-4 text-center">
+                                <h5 class="mb-0">Delete this beneficiary?</h5>
+                                <h4 class="mt-1 text-danger">@Model.BeneficiaryAccountGuid</h4>
+                                <p class="mb-0">You can always change your mind and go back.</p>
+                            </div>
+                            <form class="modal-footer flex-nowrap p-0" method="post" asp-controller="Beneficiary" asp-action="Delete">
+                                <input type="hidden" asp-for="IdBeneficiary" />
+                                <input type="hidden" asp-for="IdUser" />
+                                <button type="submit" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"><strong>Yes, delete</strong></button>
+                                <a asp-controller="Beneficiary" asp-action="Index" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0">No thanks</a>
+                            </form>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>

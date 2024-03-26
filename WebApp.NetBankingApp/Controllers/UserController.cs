@@ -158,5 +158,10 @@ namespace WebApp.NetBankingApp.Controllers
         {
             return View();
         }
+
+        public IActionResult ConfirmEmail()
+        {
+            return View();
+        }
     }
 }

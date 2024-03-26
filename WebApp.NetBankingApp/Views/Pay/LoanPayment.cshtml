@@ -9,7 +9,7 @@
 
 }
 
-<div class="container-fluid">
+@* <div class="container-fluid">
     <div class="row">
         <div class="col-6 offset-3">
             <div class="card">
@@ -79,5 +79,89 @@
             </div>
         </div>
     </div>
+</div> *@
+
+<div class="container normalText p-4 px-5">
+    <div class="row">
+        <h2 class="text-dark p-0 mb-4 text-center">Loan payment</h2>
+
+        <div class="d-flex justify-content-center">
+            <div class="py-5 px-5 bg-white rounded-4 col-6">
+
+                <form method="post" asp-controller="Pay" asp-action="LoanPayment">
+                    <div class="d-flex justify-content-center">
+                        <div class="col-8">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                            @if (Model.HasError)
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <p class="mb-0">@Model.Error</p>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            }
+
+                            <div class="mb-3">
+                                <label asp-for="SavingAccountGuid" class="form-label fw-bold">Saving Account</label>
+                                <select asp-for="SavingAccountGuid" class="form-select">
+                                    <option value="0">@(Model.SavingAccounts != null && Model.SavingAccounts.Count > 0 ? "Choose one saving account" : "There's no saving accounts, sorry")</option>
+                                    @if (Model.SavingAccounts != null && Model.SavingAccounts.Count > 0)
+                                    {
+
+                                        foreach (SavingAccountViewModel savingAccount in Model.SavingAccounts)
+                                        {
+                                            <option value="@savingAccount.Guid">@savingAccount.Guid</option>
+                                        }
+                                    }
+
+                                </select>
+                                <span asp-validation-for="SavingAccountGuid" class="text-danger"></span>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="LoanGuid" class="form-label fw-bold">Loan</label>
+                                <select asp-for="LoanGuid" class="form-select">
+                                    <option value="0">@(Model.Loans != null && Model.Loans.Count > 0 ? "Choose one loan" : "There's no loans, sorry")</option>
+                                    @if (Model.Loans != null && Model.Loans.Count > 0)
+                                    {
+
+                                        foreach (LoanViewModel loan in Model.Loans)
+                                        {
+                                            <option value="@loan.Guid">@loan.Guid</option>
+
+                                        }
+                                    }
+
+                                </select>
+                                <span asp-validation-for="SavingAccountGuid" class="text-danger"></span>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Amount" class="form-label fw-bold">Amount</label>
+                                <input asp-for="Amount" class="form-control" />
+                                <span asp-validation-for="Amount" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <div class="col-8 d-flex gap-2">
+                            <div class="col-auto">
+                                <a asp-controller="Home" asp-action="CustomerHome" class="btn btn-outline-secondary w-100">Back</a>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-info w-100">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
 </div>
+
 

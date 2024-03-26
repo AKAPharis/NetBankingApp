@@ -80,6 +80,10 @@ body {
     color: #012E40;
 }
 
+.normalText {
+    font-family: "Inter", sans-serif;
+}
+
 /* Home admin style */
 
 .cardColorText {

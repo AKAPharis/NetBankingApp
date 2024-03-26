@@ -1,8 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @using NetBankingApp.Core.Application.Helpers;
 @using NetBankingApp.Core.Application.Dtos.Account;
-@* @using NetBankingApp.Core.Application.ViewModels.Account *@
-@inject IHttpContextAccessor httpContextAccessor
+@using NetBankingApp.Core.Application.ViewModels.Account
+@using NetBankingApp.Core.Application.Interfaces.Services;
+@inject IHttpContextAccessor httpContextAccessor;
+@inject IUserService userService;
 @{
     var User = httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
     var isAdmin = User != null ? User.Roles.Any(r => r == "Admin") : false;
@@ -232,8 +234,8 @@
                 @if (User != null)
                 {
                     <div class="bg-white py-3 d-flex justify-content-end align-items-center">
-                        <p class="aaa mb-0 me-2 normalText fw-medium">Loki Cabreja</p>
-                        <img src="https://github.com/mdo.png"
+                        <p class="aaa mb-0 me-2 normalText fw-medium">@User.Username</p>
+                        <img src="https://i.pinimg.com/originals/59/ea/2a/59ea2ad381cba288ad849cb6d7aa43e3.jpg"
                              alt=""
                              width="32"
                              height="32"
