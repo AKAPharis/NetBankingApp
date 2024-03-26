@@ -35,7 +35,13 @@ namespace WebApp.NetBankingApp.Controllers
                 return View(vm);
             }
             await _savingAccountService.CreateAsync(vm);
-            return RedirectToRoute(new { controller = "User", action = "AdminUser" });
+            return RedirectToRoute(new { controller = "User", action = "UserProducts", Id = vm.IdCustomer });
+        }
+
+        public async Task<IActionResult> Delete(int Id, string IdCustomer)
+        {
+            await _savingAccountService.DeleteAsync(Id);
+            return RedirectToRoute(new { controller = "User", action = "UserProducts", Id = IdCustomer });
         }
     }
 }

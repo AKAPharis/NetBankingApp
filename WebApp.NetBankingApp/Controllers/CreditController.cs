@@ -72,12 +72,18 @@ namespace WebApp.NetBankingApp.Controllers
                 return View(vm);
             }
             await _creditCardService.CreateAsync(vm);
-            return RedirectToRoute(new { controller = "User", action = "AdminUser" });
+            return RedirectToRoute(new { controller = "User", action = "UserProducts", Id = vm.IdCustomer });
         }
 
         public ActionResult Index()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Delete(int Id, string IdCustomer)
+        {
+            await _creditCardService.DeleteAsync(Id);
+            return RedirectToRoute(new { controller = "User", action = "UserProducts", Id = IdCustomer });
         }
     }
 }

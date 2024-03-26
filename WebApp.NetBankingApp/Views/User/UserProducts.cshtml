@@ -33,6 +33,7 @@
             @foreach (SavingAccountViewModel savingAccount in Model.SavingAccounts)
             {
                 int lengthGuid = savingAccount.Guid.Length;
+                string modalDeleteId = $"DeleteModal{savingAccount.Id}";
 
                 <div class="col">
                     <div class="bg-white border-0 rounded-4 p-4 card-admin-dashboard">
@@ -57,11 +58,27 @@
                             @if (!savingAccount.IsMain)
                             {
                                 <div class="col-auto">
-                                    <a href="#">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#@modalDeleteId">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#DB0000" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
                                         </svg>
                                     </a>
+                                </div>
+
+                                <!-- Modal - Delete Product -->
+                                <div class="modal fade p-4 py-md-5" tabindex="-1" role="dialog" id="@modalDeleteId" data-bs-backdrop="static">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content rounded-3 shadow">
+                                            <div class="modal-body p-4 text-center">
+                                                <h5 class="mb-3 fw-bold">Delete this product? @savingAccount.Guid</h5>
+                                                <p class="mb-0">You can always change your mind and go back.</p>
+                                            </div>
+                                            <div class="modal-footer flex-nowrap p-0">
+                                                <a class="btn btn-lg btn-link hightlightedBTN fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" asp-action="Delete" asp-controller="SavingAccount" asp-route-Id="@savingAccount.Id" asp-route-IdCustomer="@Model.IdCustomer"><strong>Yes, enable</strong></a>
+                                                <button type="button" class="btn btn-lg btn-link hightlightedBTN fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" data-bs-dismiss="modal">No thanks</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             }
                         </div>
@@ -95,6 +112,8 @@
             @foreach (CreditCardViewModel creditCard in Model.CreditCards)
             {
                 int lengthGuid = creditCard.Guid.Length;
+                string modalDeleteId = $"DeleteModal{creditCard.Id}";
+
                 <div class="col">
                     <div class="bg-white border-0 rounded-4 p-4 card-admin-dashboard ">
                         <div class="d-flex">
@@ -109,13 +128,31 @@
                                 <p class="card-text mb-0 cardColorText">Debt</p>
                                 <p class="card-text fs-4 fw-bold">RD$ @creditCard.Debt</p>
                             </div>
+
                             <div class="col-auto">
-                                <a href="#">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#@modalDeleteId">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#DB0000" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
                                     </svg>
                                 </a>
                             </div>
+
+                            <!-- Modal - Delete Product -->
+                            <div class="modal fade p-4 py-md-5" tabindex="-1" role="dialog" id="@modalDeleteId" data-bs-backdrop="static">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content rounded-3 shadow">
+                                        <div class="modal-body p-4 text-center">
+                                            <h5 class="mb-3 fw-bold">Delete this product? @creditCard.Guid</h5>
+                                            <p class="mb-0">You can always change your mind and go back.</p>
+                                        </div>
+                                        <div class="modal-footer flex-nowrap p-0">
+                                            <a class="btn btn-lg btn-link hightlightedBTN fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" asp-action="Delete" asp-controller="Credit" asp-route-Id="@creditCard.Id" asp-route-IdCustomer="@Model.IdCustomer"><strong>Yes, enable</strong></a>
+                                            <button type="button" class="btn btn-lg btn-link hightlightedBTN fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" data-bs-dismiss="modal">No thanks</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -146,6 +183,8 @@
             @foreach (LoanViewModel loan in Model.Loans)
             {
                 int lengthGuid = loan.Guid.Length;
+                string modalDeleteId = $"DeleteModal{loan.Id}";
+
                 <div class="col">
                     <div class="bg-white border-0 rounded-4 p-4 card-admin-dashboard">
                         <div class="d-flex">
@@ -164,14 +203,30 @@
                             <div class="ms-3 col-auto">
                                 <small class="card-text mb-0 cardColorText">- @loan.Guid.Substring(lengthGuid - 4)</small>
                                 <p class="card-text mb-0 cardColorText">Debt</p>
-                                <p class="card-text fs-4 fw-bold">RD$ @loan.LoanAmount</p>
+                                <p class="card-text fs-4 fw-bold">RD$ @loan.Debt</p>
                             </div>
                             <div class="col-auto">
-                                <a href="#">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#@modalDeleteId">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#DB0000" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
                                     </svg>
                                 </a>
+                            </div>
+
+                            <!-- Modal - Delete Product -->
+                            <div class="modal fade p-4 py-md-5" tabindex="-1" role="dialog" id="@modalDeleteId" data-bs-backdrop="static">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content rounded-3 shadow">
+                                        <div class="modal-body p-4 text-center">
+                                            <h5 class="mb-3 fw-bold">Delete this product? @loan.Guid</h5>
+                                            <p class="mb-0">You can always change your mind and go back.</p>
+                                        </div>
+                                        <div class="modal-footer flex-nowrap p-0">
+                                            <a class="btn btn-lg btn-link hightlightedBTN fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" asp-action="Delete" asp-controller="Loan" asp-route-Id="@loan.Id" asp-route-IdCustomer="@Model.IdCustomer"><strong>Yes, enable</strong></a>
+                                            <button type="button" class="btn btn-lg btn-link hightlightedBTN fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" data-bs-dismiss="modal">No thanks</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
