@@ -5,6 +5,7 @@ using NetBankingApp.Core.Application.Helpers;
 using NetBankingApp.Core.Application.Interfaces.Repositories;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.Loan;
+using NetBankingApp.Core.Application.ViewModels.SavingAccount;
 using NetBankingApp.Core.Domain.Models;
 using System.ComponentModel;
 
@@ -30,9 +31,22 @@ namespace NetBankingApp.Core.Application.Services
                 response.HasError = true;
                 return response;
             }
+            if (loan.Debt == 0)
+            {
+                response.Error = $"This loan doesn't have debts";
+                response.HasError = true;
+                return response;
+            }
             if (loan.Debt - amount < 0)
                 amount = loan.Debt;
+            SavingAccountViewModel savingAccount = await _savingAccountService.GetByGuid(savingAccountGuid);
 
+            if (savingAccount == null)
+            {
+                response.Error = $"There is not a saving account with the guid {savingAccount}";
+                response.HasError = true;
+                return response;
+            }
             double withdrawResult = await _savingAccountService.Withdraw(savingAccountGuid, amount);
             if (withdrawResult == 0)
             {
