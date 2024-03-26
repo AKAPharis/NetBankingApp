@@ -26,15 +26,15 @@ namespace NetBankingApp.Core.Application.ViewModels.Account
         [DataType(DataType.Text)]
         public string DocumentId { get; set; }
 
-        [Required(ErrorMessage = "You must enter the password.")]
+        //[Required(ErrorMessage = "You must enter the password.")]
         [DataType(DataType.Password)]
         //[RegularExpression(@"^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.\W).+$", ErrorMessage = "Must contain one uppercase character, one lowercase character, one digit and one non-alphanumeric character. At least six characters long.")]
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         [Compare(nameof(Password), ErrorMessage = "Passwords don't match.")]
-        [Required(ErrorMessage = "You must enter the password.")]
+        //[Required(ErrorMessage = "You must enter the password.")]
         [DataType(DataType.Password)]
-        public string ConfirmPassword { get; set; }
+        public string? ConfirmPassword { get; set; }
 
         public string Role {  get; set; }
 

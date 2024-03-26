@@ -264,7 +264,7 @@ namespace NetBankingApp.Infrastucture.Identity.Services
             };
 
             var userWithSameUserName = await _userManager.FindByNameAsync(request.UserName);
-            if (userWithSameUserName != null)
+            if (userWithSameUserName != null && userWithSameUserName.Id != request.Id)
             {
                 response.HasError = true;
                 response.Error = $"username '{request.UserName}' is already taken.";
@@ -272,7 +272,7 @@ namespace NetBankingApp.Infrastucture.Identity.Services
             }
 
             var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
-            if (userWithSameEmail != null && userWithSameEmail.Id != request.DocumentId)
+            if (userWithSameEmail != null && userWithSameEmail.Id != request.Id)
             {
                 response.HasError = true;
                 response.Error = $"Email '{request.Email}' is already registered.";
@@ -288,7 +288,7 @@ namespace NetBankingApp.Infrastucture.Identity.Services
 
 
 
-            BankingUser user = await _userManager.FindByIdAsync(request.DocumentId);
+            BankingUser user = await _userManager.FindByIdAsync(request.Id);
             if (user == null)
             {
                 response.HasError = true;
