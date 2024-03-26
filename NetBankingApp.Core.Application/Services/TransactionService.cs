@@ -37,10 +37,23 @@ namespace NetBankingApp.Core.Application.Services
                 response.HasError = true;
                 return response;
             }
+            var originAccount = await _savingAccountService.GetByGuid(vm.GuidAccountOrigin);
+            if (originAccount == null)
+            {
+                response.Error = "This source account does not exist.";
+                response.HasError = true;
+                return response;
+            }
+            if (originAccount.Savings < vm.Amount)
+            {
+                response.Error = "The origin account do not have enough founds";
+                response.HasError = true;
+                return response;
+            }
             var withdraw = await _savingAccountService.Withdraw(vm.GuidAccountOrigin, vm.Amount);
             if (withdraw == 0)
             {
-                response.Error = "The origin account do not have enough founds";
+                response.Error = "There was an error withdrawing the money";
                 response.HasError = true;
                 return response;
             }
