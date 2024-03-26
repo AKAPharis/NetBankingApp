@@ -82,12 +82,26 @@ namespace NetBankingApp.Core.Application.Services
             CreditCard creditCard = await _creditCardRepository.GetByGuid(creditCardGuid);
             if(creditCard == null)
             {
-                response.Error = $"There is not an credit card with the guid {creditCardGuid}";
+                response.Error = $"There is not a credit card with the guid {creditCardGuid}";
+                response.HasError = true;
+                return response;
+            }
+            if (creditCard.Debt == 0)
+            {
+                response.Error = $"This credit card doesn't have debts";
                 response.HasError = true;
                 return response;
             }
             if (creditCard.Debt - amount < 0)
                 amount = creditCard.Debt;
+            SavingAccountViewModel savingAccount = await _savingAccountService.GetByGuid(savingAccountGuid);
+
+            if (savingAccount == null)
+            {
+                response.Error = $"There is not a saving account with the guid {savingAccount}";
+                response.HasError = true;
+                return response;
+            }
             double withdrawResult = await _savingAccountService.Withdraw(savingAccountGuid, amount);
             if (withdrawResult == 0)
             {
