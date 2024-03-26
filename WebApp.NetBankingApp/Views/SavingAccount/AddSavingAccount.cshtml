@@ -1,5 +1,34 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using NetBankingApp.Core.Application.ViewModels.SavingAccount;
+@model SaveSavingAccountViewModel;
 @{
+    ViewData["Tittle"] = "Add Saving Account";
 }
+
+<div class="container normalText p-4 px-5">
+    <div class="row">
+        <h2 class="text-dark p-0 mb-4 text-center">Add saving account</h2>
+        <div class="d-flex justify-content-center">
+            <div class="py-5 px-5 bg-white rounded-4 col-6">
+                <form method="post" asp-controller="SavingAccount" asp-action="AddSavingAccount">
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                    <div class="mb-4 d-flex justify-content-center">
+                        <div class="col-8">
+                            <div class="">
+                                <label asp-for="Savings" class="form-label fw-bold">Amount</label>
+                                <input asp-for="Savings" class="form-control inputCustomize">
+                                <span asp-validation-for="Savings" class="text-danger"></span>
+                                <input type="hidden" asp-for="IdCustomer" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="col-8">
+                            <button type="submit" class="btn btn-info w-100 fw-bold">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

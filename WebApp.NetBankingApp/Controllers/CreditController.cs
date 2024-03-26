@@ -6,6 +6,8 @@ using NetBankingApp.Core.Application.Dtos.Account;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.CreditCard;
 using NetBankingApp.Core.Application.Helpers;
+using NetBankingApp.Core.Application.Services;
+using NetBankingApp.Core.Application.ViewModels.Loan;
 
 namespace WebApp.NetBankingApp.Controllers
 {
@@ -56,6 +58,23 @@ namespace WebApp.NetBankingApp.Controllers
             }
             return RedirectToRoute(new { controller = "Credit", action = "Index" });
         }
+
+        public IActionResult AddCreditCard(string id)
+        {
+            return View(new SaveCreditCardViewModel { IdCustomer = id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCreditCard(SaveCreditCardViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+            await _creditCardService.CreateAsync(vm);
+            return RedirectToRoute(new { controller = "User", action = "AdminUser" });
+        }
+
         public ActionResult Index()
         {
             return View();
