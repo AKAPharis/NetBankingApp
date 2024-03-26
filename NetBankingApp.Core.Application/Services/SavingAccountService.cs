@@ -109,6 +109,7 @@ namespace NetBankingApp.Core.Application.Services
             var account = await _savingAccountRepository.GetByIdAsync(id);
             if (!account.IsMain)
             {
+                await DepositToMain(account.Savings,account.IdCustomer);
                 await _savingAccountRepository.DeleteAsync(account);
             }
         }
