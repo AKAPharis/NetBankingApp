@@ -1,0 +1,32 @@
+﻿@using NetBankingApp.Core.Application.ViewModels.Transaction
+@model TransactionBeneficiaryViewModel
+@{
+}
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card">
+                <div class="card-header card-header-color">
+                    <h4>Are you sure you want to transfer to @Model.DestinationOwnerFirsName @Model.DestinationOwnerLastName?</h4>
+                </div>
+                <div class="card-body card-body-color">
+                    <form method="post" asp-controller="Transaction" asp-action="TransferToBeneficiary">
+
+
+
+                        <input type="hidden" asp-for="IdBeneficiary" />
+                        <input type="hidden" asp-for="Amount" />
+                        <input type="hidden" asp-for="GuidAccountOrigin" />
+
+
+                        <button type="submit" class="btn btn-danger">Confirm</button>
+                        <a asp-controller="Transaction" asp-action="TransferToBeneficiary" class="btn btn-warning">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

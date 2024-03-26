@@ -91,9 +91,6 @@ namespace NetBankingApp.Core.Application.Services
             }
             response.DestinationOwnerFirsName = destinationUser.FirstName;
             response.DestinationOwnerLastName = destinationUser.LastName;
-            response.Amount = vm.Amount;
-            response.GuidAccountOrigin = vm.GuidAccountOrigin;
-            response.GuidAccountDestination = vm.GuidAccountDestination;
             return response;
         }
         public async Task<TransactionResponse> TransactionExpress(TransactionExpressViewModel vm)
@@ -160,9 +157,6 @@ namespace NetBankingApp.Core.Application.Services
             }
             response.DestinationOwnerFirsName = destinationUser.FirstName;
             response.DestinationOwnerLastName = destinationUser.LastName;
-            response.Amount = vm.Amount;
-            response.GuidAccountOrigin = vm.GuidAccountOrigin;
-            response.IdBeneficiary = vm.IdBeneficiary;
             return response;
         }
         public async Task<TransactionResponse> TransactionBeneficiary(TransactionBeneficiaryViewModel vm)

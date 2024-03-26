@@ -13,6 +13,9 @@ namespace NetBankingApp.Core.Application.ViewModels.Transaction
         public List<SavingAccountViewModel>? SavingAccounts { get; set; }
         public List<BeneficiaryViewModel>? Beneficiaries { get; set; }
 
+        public string? DestinationOwnerFirsName { get; set; }
+        public string? DestinationOwnerLastName { get; set; }
+
 
         public string? Error { get; set; }
         public bool HasError { get; set; }

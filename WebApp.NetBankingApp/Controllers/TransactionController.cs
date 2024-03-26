@@ -5,6 +5,7 @@ using NetBankingApp.Core.Application.Dtos.Account;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.Transaction;
 using NetBankingApp.Core.Application.Helpers;
+using System.Text.RegularExpressions;
 
 namespace WebApp.NetBankingApp.Controllers
 {
@@ -55,6 +56,7 @@ namespace WebApp.NetBankingApp.Controllers
             }
             return RedirectToRoute(new { controller = "Home", action = "CustomerHome" });
         }
+      
         public async Task<IActionResult> TransferExpress()
         {
             string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
@@ -83,6 +85,30 @@ namespace WebApp.NetBankingApp.Controllers
                 return View(vm);
             }
             return RedirectToRoute(new { controller = "Home", action = "CustomerHome" });
+        }
+        [Authorize(Roles = "Customer")]
+        [HttpPost]
+        public async Task<IActionResult> TransferExpressValidation(TransactionExpressViewModel vm)
+        {
+            string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
+
+            if (!ModelState.IsValid)
+            {
+                vm.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
+                return View("TransferExpress", vm);
+            }
+            var response = await _transactionService.TransactionExpressValidation(vm);
+            if (response.HasError)
+            {
+                vm.Error = response.Error;
+                vm.HasError = response.HasError;
+                vm.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
+                return View("TransferExpress", vm);
+            }
+            vm.DestinationOwnerFirsName = response.DestinationOwnerFirsName;
+            vm.DestinationOwnerLastName = response.DestinationOwnerLastName;
+            return View(vm);
+
         }
 
         [Authorize(Roles = "Customer")]
@@ -117,6 +143,32 @@ namespace WebApp.NetBankingApp.Controllers
                 return View(vm);
             }
             return RedirectToRoute(new { controller = "Home", action = "CustomerHome" });
+        }
+        [Authorize(Roles = "Customer")]
+        [HttpPost]
+        public async Task<IActionResult> TransferToBeneficiaryValidation(TransactionBeneficiaryViewModel vm)
+        {
+            string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
+            vm.IdUser = idCustomer;
+            if (!ModelState.IsValid)
+            {
+                vm.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
+                vm.Beneficiaries = await _beneficiaryService.GetBenficiaries(idCustomer);
+                return View("TransferToBeneficiary", vm);
+
+            }
+            var response = await _transactionService.TransactionBeneficiaryValidation(vm);
+            if (response.HasError)
+            {
+                vm.Error = response.Error;
+                vm.HasError = response.HasError;
+                vm.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
+                vm.Beneficiaries = await _beneficiaryService.GetBenficiaries(idCustomer);
+                return View("TransferToBeneficiary", vm);
+            }
+            vm.DestinationOwnerFirsName = response.DestinationOwnerFirsName;
+            vm.DestinationOwnerLastName = response.DestinationOwnerLastName;
+            return View(vm);
         }
     }
 }
