@@ -1,13 +1,13 @@
 ﻿@using NetBankingApp.Core.Application.ViewModels.Account;
 @model SaveUserViewModel
 @{
-    bool editMode = Model.Id == "" ? false : true;
+    bool editMode = Model.Id == null ? false : true;
     ViewData["Tittle"] = "Save User";
 }
 
 <div class="container normalText p-4 px-5">
     <div class="row">
-        <h2 class="text-dark p-0 mb-4 text-center">Add user</h2>
+        <h2 class="text-dark p-0 mb-4 text-center">@(editMode ? $"Edit user: {Model.FirstName} {Model.LastName}" : "Add user")</h2>
         <div class="d-flex justify-content-center">
             <div class="py-5 px-5 bg-white rounded-4 col-6">
 
@@ -21,11 +21,12 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             }
-                            @if (!editMode && Model.Role == "Admin")
+                            @if (!editMode)
                             {
                                 <div class="mb-3">
                                     <label for="roles" class="fw-bold">Select a role:</label>
-                                    <select class="form-select" asp-for="Role" id="roles">
+                                    <select class="form-select" asp-for="Role" id="roles" onchange="toggleDivVisibility()">
+                                        <option value="0">Choose one...</option>
                                         <option value="Admin">Admin</option>
                                         <option value="Customer">Customer</option>
                                     </select>
@@ -93,7 +94,11 @@
                             }
 
                             <div class="mb-3 mt-3">
-                                <div id="addFieldCustomer"></div>
+                                <div id="addFieldCustomer" class="" style="display: none;">
+                                    <label asp-for="InitialAmount" class="form-label fw-bold">Initial Amount</label> 
+                                    <input asp-for="InitialAmount" class="form-control">
+                                    <span asp-validation-for="InitialAmount" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
                         <input type="hidden" asp-for="Id" />

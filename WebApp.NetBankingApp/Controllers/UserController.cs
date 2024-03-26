@@ -95,6 +95,30 @@ namespace WebApp.NetBankingApp.Controllers
             return RedirectToAction("AdminUser");
         }
 
+        public async Task<IActionResult> Edit(string Id)
+        {
+            SaveUserViewModel vm = await _userService.GetByIdSaveViewModelAsync(Id);
+            return View("SaveUser", vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(SaveUserViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("SaveUser", vm);
+            }
+            var origin = Request.Headers["origin"];
+            EditResponse response = await _userService.EditAsync(vm, origin);
+            if (response.HasError)
+            {
+                vm.HasError = response.HasError;
+                vm.Error = response.Error;
+                return View("SaveUser", vm);
+            }
+            return RedirectToAction("AdminUser");
+        }
+
         public async Task<IActionResult> LogOut()
         {
             await _userService.SignOutAsync();
