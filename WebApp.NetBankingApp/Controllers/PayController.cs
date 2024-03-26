@@ -27,6 +27,7 @@ namespace WebApp.NetBankingApp.Controllers
             _contextAccessor = contextAccessor;
         }
 
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> LoanPayment()
         {
             string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
@@ -37,6 +38,7 @@ namespace WebApp.NetBankingApp.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpPost]
         public async Task<IActionResult> LoanPayment(LoanPaymentViewModel vm)
         {
@@ -59,6 +61,7 @@ namespace WebApp.NetBankingApp.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> CreditPayment()
         {
             string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
@@ -69,6 +72,7 @@ namespace WebApp.NetBankingApp.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpPost]
         public async Task<IActionResult> CreditPayment(CreditPaymentViewModel vm)
         {

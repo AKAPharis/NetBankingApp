@@ -16,11 +16,13 @@ namespace WebApp.NetBankingApp.Controllers
             _loanService = loanService;
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult AddLoan(string id)
         {
             return View(new SaveLoanViewModel { IdCustomer = id});
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddLoan(SaveLoanViewModel vm)
         {
@@ -32,6 +34,7 @@ namespace WebApp.NetBankingApp.Controllers
             return RedirectToRoute(new { controller = "User", action = "UserProducts", Id = vm.IdCustomer });
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int Id, string IdCustomer)
         {
             await _loanService.DeleteAsync(Id);

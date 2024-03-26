@@ -25,6 +25,7 @@ namespace WebApp.NetBankingApp.Controllers
             _contextAccessor = contextAccessor;
         }
 
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> TransferToAccount()
         {
             string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
@@ -33,6 +34,7 @@ namespace WebApp.NetBankingApp.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "Customer")]
         [HttpPost]
         public async Task<IActionResult> TransferToAccount(TransactionToAccountViewModel vm)
         {
@@ -60,6 +62,8 @@ namespace WebApp.NetBankingApp.Controllers
             vm.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
             return View(vm);
         }
+
+        [Authorize(Roles = "Customer")]
         [HttpPost]
         public async Task<IActionResult> TransferExpress(TransactionExpressViewModel vm)
         {
@@ -80,6 +84,8 @@ namespace WebApp.NetBankingApp.Controllers
             }
             return RedirectToRoute(new { controller = "Home", action = "CustomerHome" });
         }
+
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> TransferToBeneficiary()
         {
             string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
@@ -88,6 +94,8 @@ namespace WebApp.NetBankingApp.Controllers
             vm.Beneficiaries = await _beneficiaryService.GetBenficiaries(idCustomer);
             return View(vm);
         }
+
+        [Authorize(Roles = "Customer")]
         [HttpPost]
         public async Task<IActionResult> TransferToBeneficiary(TransactionBeneficiaryViewModel vm)
         {

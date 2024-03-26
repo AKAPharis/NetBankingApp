@@ -25,6 +25,7 @@ namespace WebApp.NetBankingApp.Controllers
             _contextAccessor = contextAccessor;
         }
 
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> AdvanceCredit()
         {
             AdvanceCreditViewModel vm = new();
@@ -34,6 +35,8 @@ namespace WebApp.NetBankingApp.Controllers
             vm.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
             return View(vm);
         }
+
+        [Authorize(Roles = "Customer")]
         [HttpPost]
         public async Task<IActionResult> AdvanceCredit(AdvanceCreditViewModel vm)
         {
@@ -59,11 +62,13 @@ namespace WebApp.NetBankingApp.Controllers
             return RedirectToRoute(new { controller = "Home", action = "CustomerHome" });
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult AddCreditCard(string id)
         {
             return View(new SaveCreditCardViewModel { IdCustomer = id });
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddCreditCard(SaveCreditCardViewModel vm)
         {
@@ -75,11 +80,7 @@ namespace WebApp.NetBankingApp.Controllers
             return RedirectToRoute(new { controller = "User", action = "UserProducts", Id = vm.IdCustomer });
         }
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int Id, string IdCustomer)
         {
             await _creditCardService.DeleteAsync(Id);

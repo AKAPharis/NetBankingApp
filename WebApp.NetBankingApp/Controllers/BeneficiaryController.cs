@@ -30,6 +30,7 @@ namespace WebApp.NetBankingApp.Controllers
             string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
             return View(await _beneficiaryService.GetBeneficiarySaveViewModel(idCustomer, idBeneficiary));
         }
+
         [HttpPost]
         public async Task<IActionResult> Delete(SaveBeneficiaryViewModel vm)
         {

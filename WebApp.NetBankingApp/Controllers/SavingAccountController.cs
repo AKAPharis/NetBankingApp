@@ -17,11 +17,13 @@ namespace WebApp.NetBankingApp.Controllers
             _savingAccountService = savingAccountService;
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult AddSavingAccount(string id)
         {
             return View(new SaveSavingAccountViewModel { IdCustomer = id });
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddSavingAccount(SaveSavingAccountViewModel vm)
         {
@@ -33,6 +35,7 @@ namespace WebApp.NetBankingApp.Controllers
             return RedirectToRoute(new { controller = "User", action = "UserProducts", Id = vm.IdCustomer });
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int Id, string IdCustomer)
         {
             await _savingAccountService.DeleteAsync(Id);

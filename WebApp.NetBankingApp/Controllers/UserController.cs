@@ -11,7 +11,6 @@ using NetBankingApp.Core.Application.ViewModels.Home;
 
 namespace WebApp.NetBankingApp.Controllers
 {
-    //[Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -64,23 +63,27 @@ namespace WebApp.NetBankingApp.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeactivateUser(string Id)
         {
             await _userService.DeactivateUser(Id);
             return RedirectToAction("AdminUser");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ActivateUser(string Id)
         {
             await _userService.ActivateUser(Id);
             return RedirectToAction("AdminUser");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AdminUser()
         {
             return View(await _userService.GetAll());
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UserProducts(string Id)
         {
             CustomerHomeViewModel home = new();
@@ -92,11 +95,13 @@ namespace WebApp.NetBankingApp.Controllers
             return View(home);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View("SaveUser", new SaveUserViewModel());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(SaveUserViewModel vm)
         {
@@ -115,12 +120,14 @@ namespace WebApp.NetBankingApp.Controllers
             return RedirectToAction("AdminUser");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string Id)
         {
             SaveUserViewModel vm = await _userService.GetByIdSaveViewModelAsync(Id);
             return View("SaveUser", vm);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(SaveUserViewModel vm)
         {
@@ -139,6 +146,7 @@ namespace WebApp.NetBankingApp.Controllers
             return RedirectToAction("AdminUser");
         }
 
+        [Authorize]
         public async Task<IActionResult> LogOut()
         {
             await _userService.SignOutAsync();
