@@ -12,7 +12,7 @@ namespace NetBankingApp.Core.Application.ViewModels.CreditCard
     {
         [Required]
         public string CreditCardGuid { get; set; }
-        [Required]
+        [Range(1, double.MaxValue, ErrorMessage = "The amount entered is not even greater than 0.")]
         public double Amount { get; set; }
         [Required]
         public string SavingAccountGuid { get; set; }
