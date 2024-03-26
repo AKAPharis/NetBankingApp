@@ -210,6 +210,7 @@ namespace NetBankingApp.Infrastucture.Identity.Services
                 LastName = request.LastName,
                 UserName = request.UserName,
                 DocumentId = request.DocumentId,
+                EmailConfirmed = true
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
