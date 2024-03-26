@@ -89,3 +89,31 @@ body {
 .navTextColor {
     color: #383838;
 }
+
+.cardColorPink {
+    background-color: #FFDAEA;
+}
+
+.cardColorPurple {
+    background-color: #F5D8FF;
+}
+
+.cardColorYellow {
+    background-color: #FFFEA9;
+}
+
+.cardColorGreen {
+    background-color: #C6FFBD;
+}
+
+.cardColorDarkPurple {
+    background-color: #D8DAFF;
+}
+
+.cardColorRed {
+    background-color: #FFC3C3;
+}
+
+.cardColorBlueGreen {
+    background-color: #D8FFFB;
+}

@@ -17,13 +17,14 @@ namespace WebApp.NetBankingApp.Controllers
         private readonly ILoanService _loanService;
         private readonly IHttpContextAccessor _contextAccessor;
 
-        public HomeController(ILogger<HomeController> logger, ILogService logService, ISavingAccountService savingAccountService, ICreditCardService creditCardService, ILoanService loanService, IHttpContextAccessor contextAccessor)
+        public HomeController(ILogger<HomeController> logger, ILogService logService, ICreditCardService creditCardService, ISavingAccountService savingAccountService, ILoanService loanService, IHttpContextAccessor contextAccessor)
         {
-            _logService = logService;
             _logger = logger;
+            _logService = logService;
             _creditCardService = creditCardService;
             _savingAccountService = savingAccountService;
             _loanService = loanService;
+            _contextAccessor = contextAccessor;
         }
 
         public async Task<IActionResult> Index()
@@ -34,13 +35,14 @@ namespace WebApp.NetBankingApp.Controllers
         public async Task<IActionResult> CustomerHome()
         {
 
-            //string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
-            //CustomerHomeViewModel home = new();
-            //home.Loans = await _loanService.GetByCustomer(idCustomer);
-            //home.CreditCards = await _creditCardService.GetByCustomer(idCustomer);
-            //home.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
+            string idCustomer = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Id;
 
-            return View(/*home*/);
+            CustomerHomeViewModel home = new();
+            home.Loans = await _loanService.GetByCustomer(idCustomer);
+            home.CreditCards = await _creditCardService.GetByCustomer(idCustomer);
+            home.SavingAccounts = await _savingAccountService.GetByCustomer(idCustomer);
+
+            return View(home);
         }
     }
 }
