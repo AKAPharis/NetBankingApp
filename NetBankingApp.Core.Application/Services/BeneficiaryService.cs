@@ -24,7 +24,25 @@ namespace NetBankingApp.Core.Application.Services
         public async Task<SaveBeneficiaryViewModel> CreateBeneficiary(SaveBeneficiaryViewModel vm)
         {
             var account = await _savingAccountService.GetByGuid(vm.BeneficiaryAccountGuid);
+            if (account == null)
+            {
+                vm.Error = $"There's no an account with the guid {vm.BeneficiaryAccountGuid}";
+                vm.HasError = true;
+                return vm;
+            }
             var beneficiary = await _userService.GetByIdAsync(account.IdCustomer);
+            if(beneficiary == null)
+            {
+                vm.Error = $"We couldn't found the beneficiary";
+                vm.HasError = true;
+                return vm;
+            }
+            if (beneficiary.Id == vm.IdUser)
+            {
+                vm.Error = $"You cannot be a beneficiary of yourself";
+                vm.HasError = true;
+                return vm;
+            }
             vm.IdBeneficiary = beneficiary.Id;
             return _mapper.Map<SaveBeneficiaryViewModel>(await _beneficiaryRepository.CreateAsync(_mapper.Map<Beneficiary>(vm)));
         }
