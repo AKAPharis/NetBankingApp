@@ -8,6 +8,7 @@ using NetBankingApp.Infrastucture.Identity.Seeds;
 using Microsoft.AspNetCore.Authorization;
 using NetBankingApp.Core.Application.Enums;
 using NetBankingApp.Core.Application.ViewModels.Home;
+using WebApp.NetBankingApp.Middlewares;
 
 namespace WebApp.NetBankingApp.Controllers
 {
@@ -28,12 +29,14 @@ namespace WebApp.NetBankingApp.Controllers
             _contextAccessor = contextAccessor;
         }
 
+        [ServiceFilter(typeof(LoginAuthorize))]
         public IActionResult Index()
         {
             return View(new LoginViewModel());
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(LoginAuthorize))]
         public async Task<IActionResult> Index(LoginViewModel vm)
         {
             if (!ModelState.IsValid)
@@ -159,9 +162,11 @@ namespace WebApp.NetBankingApp.Controllers
             return View();
         }
 
-        public IActionResult ConfirmEmail()
+        
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
-            return View();
+            string response = await _userService.ConfirmEmailAsync(userId, token);
+            return View("ConfirmEmail");
         }
     }
 }

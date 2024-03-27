@@ -5,6 +5,7 @@ using NetBankingApp.Infrastucture.Shared;
 using Microsoft.AspNetCore.Identity;
 using NetBankingApp.Infrastucture.Identity.Seeds;
 using NetBankingApp.Infrastucture.Identity.Models;
+using WebApp.NetBankingApp.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddSharedInfrastructure(builder.Configuration);
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceLayer(builder.Configuration);
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
+builder.Services.AddTransient<LoginAuthorize, LoginAuthorize>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -56,6 +58,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=User}/{action=ConfirmEmail}/{id?}");
+    pattern: "{controller=User}/{action=Index}/{id?}");
 
 app.Run();
