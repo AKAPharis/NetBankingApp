@@ -8,79 +8,6 @@
     ViewData["Title"] = "Transfer to accounts";
 
 }
- 
-@*<div class="container-fluid">
-    <div class="row">
-        <div class="col-6 offset-3">
-            <div class="card">
-                <div class="card-header card-header-color">
-                    <h4>Transfer to beneficiary</h4>
-                </div>
-                <div class="card-body">
-                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-
-                    @if (Model.HasError)
-                    {
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <p>@Model.Error</p>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    }
-                    <form method="post" asp-controller="Transaction" asp-action="TransferToBeneficiaryValidation">
-
-
-                        <div class="mb-3">
-                            <label asp-for="GuidAccountOrigin" class="form-label">Origin account:</label>
-                            <select asp-for="GuidAccountOrigin" class="form-select">
-                                <option value="0">@(Model.SavingAccounts != null && Model.SavingAccounts.Count > 0 ? "Choose one saving account" : "There's no saving accounts, sorry")</option>
-                                @if (Model.SavingAccounts != null && Model.SavingAccounts.Count > 0)
-                                {
-
-                                    foreach (SavingAccountViewModel savingAccount in Model.SavingAccounts)
-                                    {
-                                        <option value="@savingAccount.Guid">@savingAccount.Guid</option>
-
-                                    }
-                                }
-
-                            </select>
-                            <span asp-validation-for="GuidAccountOrigin" class="text-danger"></span>
-
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="IdBeneficiary" class="form-label">Beneficiary:</label>
-                            <select asp-for="IdBeneficiary" class="form-select">
-                                <option value="0">@(Model.Beneficiaries != null && Model.Beneficiaries.Count > 0 ? "Choose one beneficiary" : "There's no beneficiaries, sorry")</option>
-                                @if (Model.Beneficiaries != null && Model.Beneficiaries.Count > 0)
-                                {
-
-                                    foreach (BeneficiaryViewModel beneficiary in Model.Beneficiaries)
-                                    {
-                                        <option value="@beneficiary.IdBeneficiary">@beneficiary.NickName</option>
-
-                                    }
-                                }
-
-                            </select>
-                            <span asp-validation-for="IdBeneficiary" class="text-danger"></span>
-
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Amount" class="form-label">Amount:</label>
-                            <input asp-for="Amount" class="form-control" />
-                            <span asp-validation-for="Amount" class="text-danger"></span>
-                        </div>
-
-
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <a asp-controller="Home" asp-action="CustomerHome" class="btn btn-warning">Back</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> *@
 
 <div class="container normalText p-4 px-5">
     <div class="row">
@@ -92,7 +19,6 @@
                 <form method="post" asp-controller="Transaction" asp-action="TransferToBeneficiaryValidation">
                     <div class="d-flex justify-content-center">
                         <div class="col-8">
-                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
                             @if (Model.HasError)
                             {

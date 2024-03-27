@@ -4,62 +4,7 @@
     ViewData["Tittle"] = "Beneficiaries";
 }
 
-@* <div class="container">
-    <div class="row mb-3">
-        <div class="col-3 offset-9">
-            <a asp-controller="Beneficiary" asp-action="Create" class="btn btn-success">Create a new Beneficiary</a>
-        </div>
-    </div>
-    @if (Model != null && Model.Count > 0)
-    {
-        <table class="table table-striped table-customize">
-            <thead>
-                <tr>
-                    <th scope="col">Nickname</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Account Guid</th>
-                    <th scope="col" class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (BeneficiaryViewModel vm in Model)
-                {
-                    <tr>
 
-                        <td>
-                            @vm.NickName
-                        </td>
-
-                        <td>
-                            @vm.BeneficiaryFirstName
-                        </td>
-                        <td>
-                            @vm.BeneficiaryLastName
-                        </td>
-                        <td>
-                            @vm.BeneficiaryAccountGuid
-
-                        </td>
-
-                        <td class="text-center">
-                            <a asp-controller="Beneficiary" asp-action="Delete" asp-route-idBeneficiary="@vm.IdBeneficiary" class="btn btn-danger btn-sm ml-2">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <div class="row">
-            <div class="col-md-12">
-                <h5 class="text-dark">There's no Beneficiaries available</h5>
-            </div>
-        </div>
-
-    }
-</div> *@
 
 <div class="container normalText p-4 px-5">
     <div class="d-flex justify-content-start align-items-center gap-2">

@@ -7,75 +7,6 @@
 
 }
 
-@* <div class="container-fluid">
-    <div class="row">
-        <div class="col-6 offset-3">
-            <div class="card">
-                <div class="card-header card-header-color">
-                    <h4>Advance credit</h4>
-                </div>
-                <div class="card-body">
-                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-
-                    @if (Model.HasError)
-                    {
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <p>@Model.Error</p>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    }
-                    <form method="post" asp-controller="Credit" asp-action="AdvanceCredit">
-
-
-                        <div class="mb-3">
-                            <label asp-for="SavingAccountGuid" class="form-label">Saving Account:</label>
-                            <select asp-for="SavingAccountGuid" class="form-select">
-                                <option value="0">@(Model.SavingAccounts != null && Model.SavingAccounts.Count > 0 ? "Choose one saving account" : "There's no saving accounts, sorry")</option>
-                                @if (Model.SavingAccounts != null && Model.SavingAccounts.Count > 0)
-                                {
-
-                                    foreach (SavingAccountViewModel savingAccount in Model.SavingAccounts)
-                                    {
-                                        <option value="@savingAccount.Guid">@savingAccount.Guid</option>
-                                    }
-                                }
-
-                            </select>
-                            <span asp-validation-for="SavingAccountGuid" class="text-danger"></span>
-
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="CreditCardGuid" class="form-label">Credit card:</label>
-                            <select asp-for="CreditCardGuid" class="form-select">
-                                <option value="0">@(Model.CreditCards != null && Model.CreditCards.Count > 0 ? "Choose one credit card" : "There's no credit cards, sorry")</option>
-                                @if (Model.CreditCards != null && Model.CreditCards.Count > 0)
-                                {
-                                    foreach (CreditCardViewModel creditCard in Model.CreditCards)
-                                    {
-                                        <option value="@creditCard.Guid">@creditCard.Guid</option>
-                                    }
-                                }
-
-                            </select>
-                            <span asp-validation-for="SavingAccountGuid" class="text-danger"></span>
-
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Amount" class="form-label">Amount:</label>
-                            <input asp-for="Amount" class="form-control" />
-                            <span asp-validation-for="Amount" class="text-danger"></span>
-                        </div>
-
-
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <a asp-controller="Home" asp-action="CustomerHome" class="btn btn-warning">Back</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> *@
-
 <div class="container normalText p-4 px-5">
     <div class="row">
         <h2 class="text-dark p-0 mb-4 text-center">Advance credit</h2>
@@ -86,7 +17,6 @@
                 <form method="post" asp-controller="Credit" asp-action="AdvanceCredit">
                     <div class="d-flex justify-content-center">
                         <div class="col-8">
-                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
                             @if (Model.HasError)
                             {
