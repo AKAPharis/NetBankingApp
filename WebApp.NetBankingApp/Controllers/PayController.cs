@@ -58,7 +58,7 @@ namespace WebApp.NetBankingApp.Controllers
                 vm.Loans = await _loanService.GetByCustomer(idCustomer);
                 return View(vm);
             }
-            return View(vm);
+            return RedirectToRoute(new { controller = "Home", action = "CustomerHome" });
         }
 
         [Authorize(Roles = "Customer")]
@@ -92,7 +92,7 @@ namespace WebApp.NetBankingApp.Controllers
                 vm.CreditCards = await _creditCardService.GetByCustomer(idCustomer);
                 return View(vm);
             }
-            return View(vm);
+            return RedirectToRoute(new { controller = "Home", action = "CustomerHome" });
         }
     }
 }
