@@ -71,14 +71,15 @@ namespace NetBankingApp.Core.Application.Services
         {
             var result = new EditResponse();
             var loggedUser = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
+            
             if (loggedUser == null)
             {
 
                 result.Error = "You need to be logged to edit an user";
                 result.HasError = true;
                 return result;
-
             }
+
             if (vm.Role == Roles.Admin.ToString() && vm.Id == loggedUser.Id)
             {
                 result.Error = "You cannot edit yourself";

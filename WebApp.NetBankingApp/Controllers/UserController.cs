@@ -83,7 +83,10 @@ namespace WebApp.NetBankingApp.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AdminUser()
         {
-            return View(await _userService.GetAll());
+            var currentUser = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
+            var listUsers = await _userService.GetAll();
+            var filteredUsers = listUsers.Where(u => u.Id != currentUser.Id);
+            return View(filteredUsers.ToList());
         }
 
         [Authorize(Roles = "Admin")]
@@ -127,6 +130,9 @@ namespace WebApp.NetBankingApp.Controllers
         public async Task<IActionResult> Edit(string Id)
         {
             SaveUserViewModel vm = await _userService.GetByIdSaveViewModelAsync(Id);
+
+
+
             return View("SaveUser", vm);
         }
 
