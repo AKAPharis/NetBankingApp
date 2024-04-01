@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using NetBankingApp.Core.Application.Dtos.Account;
 using NetBankingApp.Core.Application.Enums;
 using NetBankingApp.Core.Application.Interfaces.Services;
 using NetBankingApp.Core.Application.ViewModels.Account;
 using NetBankingApp.Core.Application.ViewModels.SavingAccount;
+using NetBankingApp.Core.Application.Helpers;
 
 namespace NetBankingApp.Core.Application.Services
 {
@@ -12,12 +14,14 @@ namespace NetBankingApp.Core.Application.Services
         private readonly IAccountService _accountService;
         private readonly ISavingAccountService _savingAccountService;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public UserService(IAccountService accountService, ISavingAccountService savingAccountService, IMapper mapper)
+        public UserService(IAccountService accountService, ISavingAccountService savingAccountService, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _accountService = accountService;
             _savingAccountService = savingAccountService;
             _mapper = mapper;
+            _contextAccessor = httpContextAccessor;
         }
 
         public async Task<string> ConfirmEmailAsync(string userId, string token)
@@ -43,9 +47,9 @@ namespace NetBankingApp.Core.Application.Services
             {
                 await _savingAccountService.CreateAsync(new SaveSavingAccountViewModel
                 {
-                   IdCustomer = response.Id,
-                   Savings = vm.InitialAmount,
-                   IsMain = true,
+                    IdCustomer = response.Id,
+                    Savings = vm.InitialAmount,
+                    IsMain = true,
                 });
 
             }
@@ -65,14 +69,32 @@ namespace NetBankingApp.Core.Application.Services
 
         public async Task<EditResponse> EditAsync(SaveUserViewModel vm, string origin)
         {
-            var result = await _accountService.EditUserAsync(_mapper.Map<EditRequest>(vm), origin);
+            var result = new EditResponse();
+            var loggedUser = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
+            if (loggedUser == null)
+            {
+
+                result.Error = "You need to be logged to edit an user";
+                result.HasError = true;
+                return result;
+
+            }
+            if (vm.Role == Roles.Admin.ToString() && vm.Id == loggedUser.Id)
+            {
+                result.Error = "You cannot edit yourself";
+                result.HasError = true;
+                return result;
+            }
+
+            result = await _accountService.EditUserAsync(_mapper.Map<EditRequest>(vm), origin);
             if (result != null && !result.HasError)
             {
-                if(vm.Role == Roles.Customer.ToString() && vm.InitialAmount > 0)
+                if (vm.Role == Roles.Customer.ToString() && vm.InitialAmount > 0)
                 {
                     await _savingAccountService.DepositToMain(vm.InitialAmount, vm.Id);
                 }
             }
+
             return result;
         }
         public async Task<List<UserViewModel>> GetAll()
@@ -107,12 +129,26 @@ namespace NetBankingApp.Core.Application.Services
 
         public async Task DeactivateUser(string id)
         {
-            await _accountService.DeactivateUser(id);
+            var loggedUser = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
+            if (loggedUser != null && loggedUser.Id != id)
+            {
+                await _accountService.DeactivateUser(id);
+
+
+            }
+
+
         }
 
         public async Task ActivateUser(string id)
         {
-            await _accountService.ActivateUser(id);
+            var loggedUser = _contextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
+            if (loggedUser != null && loggedUser.Id != id)
+            {
+
+
+                await _accountService.ActivateUser(id);
+            }
         }
     }
 }

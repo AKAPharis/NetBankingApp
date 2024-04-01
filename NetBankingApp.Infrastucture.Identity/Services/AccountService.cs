@@ -181,7 +181,7 @@ namespace NetBankingApp.Infrastucture.Identity.Services
             }
 
             var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
-            if (userWithSameEmail != null )
+            if (userWithSameEmail != null)
             {
                 response.HasError = true;
                 response.Error = $"Email '{request.Email}' is already registered.";
